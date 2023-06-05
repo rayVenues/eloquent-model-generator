@@ -1,7 +1,7 @@
 {
-    "name": "ricardoaponte/eloquent-model-generator",
+    "name": "rayvenues/eloquent-model-generator",
     "description": "Eloquent Model Generator",
-    "version": "2.0.1",
+    "version": "0.0.1",
     "license": "MIT",
     "autoload": {
         "psr-4": {
@@ -28,7 +28,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Ricardoaponte\\EloquentModelGenerator\\Provider\\GeneratorServiceProvider"
+                "rayvenues\\EloquentModelGenerator\\Provider\\GeneratorServiceProvider"
             ]
         }
     },

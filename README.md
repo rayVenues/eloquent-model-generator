@@ -5,12 +5,12 @@
 Eloquent Model Generator generates Eloquent models using database schema as a source.
 
 ## Version 1.0.0
-Version 2.0.0 has been released.
+Version 1.0.0 has been released.
 
 ## Installation
 Step 1. Add Eloquent Model Generator to your project:
 ```
-composer require ray/eloquent-model-generator --dev
+composer require rayvenues/eloquent-model-generator --dev
 ```
 Step 2. Register `GeneratorServiceProvider`:
 ```php
@@ -134,31 +134,19 @@ use Illuminate\Database\Eloquent\Model;
  */
 class User extends Model
 {
-    /**
-     * @var array
-     */
     protected $fillable = ['role_id', 'username', 'email'];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function role()
+    public function role(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo('Role');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function articles()
+    public function articles(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany('Article');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function comments()
+    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany('Comment');
     }
