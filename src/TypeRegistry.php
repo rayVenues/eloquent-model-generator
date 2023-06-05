@@ -1,6 +1,6 @@
 <?php
 
-namespace Krlove\EloquentModelGenerator;
+namespace Ray\EloquentModelGenerator;
 
 use Illuminate\Database\DatabaseManager;
 

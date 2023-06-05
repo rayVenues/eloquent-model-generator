@@ -5,7 +5,7 @@ namespace unit\Helper;
 use Doctrine\DBAL\Schema\Index;
 use Doctrine\DBAL\Schema\Table;
 use Illuminate\Database\Eloquent\Model;
-use Krlove\EloquentModelGenerator\Helper\EmgHelper;
+use Ray\EloquentModelGenerator\Helper\EmgHelper;
 use PHPUnit\Framework\TestCase;
 
 class EmgHelperTest extends TestCase

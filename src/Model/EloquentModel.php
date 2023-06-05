@@ -1,18 +1,18 @@
 <?php
 
-namespace Krlove\EloquentModelGenerator\Model;
+namespace Ray\EloquentModelGenerator\Model;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo as EloquentBelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany as EloquentBelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany as EloquentHasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne as EloquentHasOne;
 use Illuminate\Support\Str;
-use Krlove\CodeGenerator\Model\ClassModel;
-use Krlove\CodeGenerator\Model\DocBlockModel;
-use Krlove\CodeGenerator\Model\MethodModel;
-use Krlove\CodeGenerator\Model\VirtualPropertyModel;
-use Krlove\EloquentModelGenerator\Exception\GeneratorException;
-use Krlove\EloquentModelGenerator\Helper\EmgHelper;
+use Ray\EloquentModelGenerator\Model\ClassModel;
+use Ray\EloquentModelGenerator\Model\DocBlockModel;
+use Ray\EloquentModelGenerator\Model\MethodModel;
+use Ray\EloquentModelGenerator\Model\VirtualPropertyModel;
+use Ray\EloquentModelGenerator\Exception\GeneratorException;
+use Ray\EloquentModelGenerator\Helper\EmgHelper;
 
 class EloquentModel extends ClassModel
 {
@@ -28,6 +28,27 @@ class EloquentModel extends ClassModel
     public function getTableName(): string
     {
         return $this->tableName;
+    }
+
+    public function addReturnType(Relation $relation): string
+    {
+        if ($relation instanceof HasOne) {
+            $docBlock = sprintf(': \%s', EloquentHasOne::class);
+
+        } elseif ($relation instanceof HasMany) {
+            $docBlock = sprintf(': \%s', EloquentHasMany::class);
+
+        } elseif ($relation instanceof BelongsTo) {
+            $docBlock = sprintf(': \%s', EloquentBelongsTo::class);
+
+        } elseif ($relation instanceof BelongsToMany) {
+            $docBlock = sprintf(': \%s', EloquentBelongsToMany::class);
+
+        } else {
+            throw new GeneratorException('Relation not supported');
+        }
+
+        return $docBlock;
     }
 
     public function addRelation(Relation $relation): void
@@ -59,7 +80,8 @@ class EloquentModel extends ClassModel
 
         $method = new MethodModel($name);
         $method->setBody($this->createRelationMethodBody($relation));
-        $method->setDocBlock(new DocBlockModel($docBlock));
+        //$method->setDocBlock(new DocBlockModel($docBlock));
+        $method->setReturnType($this->addReturnType($relation));
 
         $this->addMethod($method);
         $this->addProperty(new VirtualPropertyModel($name, $virtualPropertyType));

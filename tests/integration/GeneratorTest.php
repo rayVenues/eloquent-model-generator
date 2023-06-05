@@ -1,22 +1,21 @@
 <?php
 
-namespace Krlove\Tests\Integration;
+namespace Ray\Tests\Integration;
 
 use Illuminate\Database\Connectors\SQLiteConnector;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\SQLiteConnection;
-use Krlove\EloquentModelGenerator\Config\Config;
-use Krlove\EloquentModelGenerator\Generator;
-use Krlove\EloquentModelGenerator\Helper\EmgHelper;
-use Krlove\EloquentModelGenerator\Processor\CustomPrimaryKeyProcessor;
-use Krlove\EloquentModelGenerator\Processor\CustomPropertyProcessor;
-use Krlove\EloquentModelGenerator\Processor\FieldProcessor;
-use Krlove\EloquentModelGenerator\Processor\NamespaceProcessor;
-use Krlove\EloquentModelGenerator\Processor\RelationProcessor;
-use Krlove\EloquentModelGenerator\Processor\TableNameProcessor;
-use Krlove\EloquentModelGenerator\TypeRegistry;
 use PHPUnit\Framework\TestCase;
+use Ray\EloquentModelGenerator\Config\Config;
+use Ray\EloquentModelGenerator\Generator;
+use Ray\EloquentModelGenerator\Processor\CustomPrimaryKeyProcessor;
+use Ray\EloquentModelGenerator\Processor\CustomPropertyProcessor;
+use Ray\EloquentModelGenerator\Processor\FieldProcessor;
+use Ray\EloquentModelGenerator\Processor\NamespaceProcessor;
+use Ray\EloquentModelGenerator\Processor\RelationProcessor;
+use Ray\EloquentModelGenerator\Processor\TableNameProcessor;
+use Ray\EloquentModelGenerator\TypeRegistry;
 
 class GeneratorTest extends TestCase
 {

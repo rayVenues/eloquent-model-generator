@@ -1,21 +1,21 @@
 <?php
 
-namespace Krlove\EloquentModelGenerator\Provider;
+namespace Ray\EloquentModelGenerator\Provider;
 
 use Illuminate\Console\Events\CommandStarting;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
-use Krlove\EloquentModelGenerator\Command\GenerateModelCommand;
-use Krlove\EloquentModelGenerator\Command\GenerateModelsCommand;
-use Krlove\EloquentModelGenerator\EventListener\GenerateCommandEventListener;
-use Krlove\EloquentModelGenerator\Generator;
-use Krlove\EloquentModelGenerator\Processor\CustomPrimaryKeyProcessor;
-use Krlove\EloquentModelGenerator\Processor\CustomPropertyProcessor;
-use Krlove\EloquentModelGenerator\Processor\FieldProcessor;
-use Krlove\EloquentModelGenerator\Processor\NamespaceProcessor;
-use Krlove\EloquentModelGenerator\Processor\RelationProcessor;
-use Krlove\EloquentModelGenerator\Processor\TableNameProcessor;
-use Krlove\EloquentModelGenerator\TypeRegistry;
+use Ray\EloquentModelGenerator\Command\GenerateModelCommand;
+use Ray\EloquentModelGenerator\Command\GenerateModelsCommand;
+use Ray\EloquentModelGenerator\EventListener\GenerateCommandEventListener;
+use Ray\EloquentModelGenerator\Generator;
+use Ray\EloquentModelGenerator\Processor\CustomPrimaryKeyProcessor;
+use Ray\EloquentModelGenerator\Processor\CustomPropertyProcessor;
+use Ray\EloquentModelGenerator\Processor\FieldProcessor;
+use Ray\EloquentModelGenerator\Processor\NamespaceProcessor;
+use Ray\EloquentModelGenerator\Processor\RelationProcessor;
+use Ray\EloquentModelGenerator\Processor\TableNameProcessor;
+use Ray\EloquentModelGenerator\TypeRegistry;
 
 class GeneratorServiceProvider extends ServiceProvider
 {

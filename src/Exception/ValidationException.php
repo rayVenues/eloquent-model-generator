@@ -3,9 +3,9 @@
 namespace Ray\EloquentModelGenerator\Exception;
 
 /**
- * Class GeneratorException
+ * Class ValidationException
  * @package App\Exception
  */
-class GeneratorException extends \Exception
+class ValidationException extends \Exception
 {
 }

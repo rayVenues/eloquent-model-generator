@@ -1,6 +1,6 @@
 <?php
 
-namespace Krlove\EloquentModelGenerator\Config;
+namespace Ray\EloquentModelGenerator\Config;
 
 class Config
 {

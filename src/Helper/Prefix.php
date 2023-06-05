@@ -1,10 +1,10 @@
 <?php
 
-namespace Krlove\EloquentModelGenerator\Helper;
+namespace Ray\EloquentModelGenerator\Helper;
 
 class Prefix
 {
-    private static ?string $prefix = null;
+    private static ?string $prefix = '';
 
     public static function setPrefix(?string $prefix): void
     {

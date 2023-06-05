@@ -1,6 +1,6 @@
 <?php
 
-namespace Krlove\EloquentModelGenerator\Helper;
+namespace Ray\EloquentModelGenerator\Helper;
 
 use Doctrine\DBAL\Schema\Table;
 use Illuminate\Support\Str;

@@ -1,6 +1,7 @@
 <?php
 
-namespace Krlove\EloquentModelGenerator\Model;
+namespace Ray\EloquentModelGenerator\Model;
+
 
 class BelongsTo extends Relation
 {

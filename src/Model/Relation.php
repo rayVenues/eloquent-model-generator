@@ -1,6 +1,6 @@
 <?php
 
-namespace Krlove\EloquentModelGenerator\Model;
+namespace Ray\EloquentModelGenerator\Model;
 
 abstract class Relation
 {

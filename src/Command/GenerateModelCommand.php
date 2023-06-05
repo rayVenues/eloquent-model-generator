@@ -1,18 +1,18 @@
 <?php
 
-namespace Krlove\EloquentModelGenerator\Command;
+namespace Ray\EloquentModelGenerator\Command;
 
 use Illuminate\Console\Command;
 use Illuminate\Database\DatabaseManager;
-use Krlove\EloquentModelGenerator\Generator;
-use Krlove\EloquentModelGenerator\Helper\Prefix;
+use Ray\EloquentModelGenerator\Generator;
+use Ray\EloquentModelGenerator\Helper\Prefix;
 use Symfony\Component\Console\Input\InputArgument;
 
 class GenerateModelCommand extends Command
 {
     use GenerateCommandTrait;
 
-    protected $name = 'krlove:generate:model';
+    protected $name = 'ray:generate:model';
 
     public function __construct(private Generator $generator, private DatabaseManager $databaseManager)
     {

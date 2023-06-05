@@ -1,18 +1,18 @@
 <?php
 
-namespace Krlove\EloquentModelGenerator;
+namespace Ray\EloquentModelGenerator;
 
 use IteratorAggregate;
-use Krlove\EloquentModelGenerator\Config\Config;
-use Krlove\EloquentModelGenerator\Model\EloquentModel;
-use Krlove\EloquentModelGenerator\Processor\ProcessorInterface;
+use Ray\EloquentModelGenerator\Config\Config;
+use Ray\EloquentModelGenerator\Model\EloquentModel;
+use Ray\EloquentModelGenerator\Processor\ProcessorInterface;
 
 class Generator
 {
     /**
      * @var ProcessorInterface[]
      */
-    protected array $processors;
+    protected iterable $processors;
 
     /**
      * @param ProcessorInterface[]|IteratorAggregate $processors
