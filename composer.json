@@ -28,7 +28,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "rayvenues\\EloquentModelGenerator\\Provider\\GeneratorServiceProvider"
+                "Ray\\EloquentModelGenerator\\Provider\\GeneratorServiceProvider"
             ]
         }
     },
