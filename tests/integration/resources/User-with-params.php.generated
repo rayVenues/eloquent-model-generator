@@ -17,9 +17,7 @@ use Base\ClassName;
 class User extends ClassName
 {
     public $timestamps = false;
-
     protected $dateFormat = 'd/m/y';
-
     protected $fillable = ['organization_id', 'username', 'is_active'];
 
     public function avatar(): \Illuminate\Database\Eloquent\Relations\HasOne
