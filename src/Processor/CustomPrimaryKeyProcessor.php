@@ -33,9 +33,9 @@ class CustomPrimaryKeyProcessor implements ProcessorInterface
         $column = $tableDetails->getColumn($columns[0]);
         if ($column->getName() !== 'id') {
             $primaryKeyProperty = new PropertyModel('primaryKey', 'protected', $column->getName());
-//            $primaryKeyProperty->setDocBlock(
-//                new DocBlockModel('The primary key for the model.', '', '@var string')
-//            );
+            $primaryKeyProperty->setDocBlock(
+                new DocBlockModel('The primary key for the model.', '', '@var string')
+            );
             $model->addProperty($primaryKeyProperty);
         }
 
@@ -45,17 +45,17 @@ class CustomPrimaryKeyProcessor implements ProcessorInterface
                 'protected',
                 $this->typeRegistry->resolveType($column->getType()->getName())
             );
-//            $keyTypeProperty->setDocBlock(
-//                new DocBlockModel('The "type" of the auto-incrementing ID.', '', '@var string')
-//            );
+            $keyTypeProperty->setDocBlock(
+                new DocBlockModel('The "type" of the auto-incrementing ID.', '', '@var string')
+            );
             $model->addProperty($keyTypeProperty);
         }
 
         if (!$column->getAutoincrement()) {
             $autoincrementProperty = new PropertyModel('incrementing', 'public', false);
-//            $autoincrementProperty->setDocBlock(
-//                new DocBlockModel('Indicates if the IDs are auto-incrementing.', '', '@var bool')
-//            );
+            $autoincrementProperty->setDocBlock(
+                new DocBlockModel('Indicates if the IDs are auto-incrementing.', '', '@var bool')
+            );
             $model->addProperty($autoincrementProperty);
         }
     }

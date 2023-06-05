@@ -67,7 +67,9 @@ class GeneratorTest extends TestCase
             ->setBaseClassName(Model::class);
 
         $model = $this->generator->generateModel($config);
-        $this->assertEquals(file_get_contents(__DIR__ . '/resources/' . $modelName . '.php.generated'), $model->render());
+        $a = $model->render();
+        $b = file_get_contents(__DIR__ . '/resources/' . $modelName . '.php.generated');
+        $this->assertEquals($a, $b);
     }
 
     public function modelNameProvider(): array
@@ -101,6 +103,8 @@ class GeneratorTest extends TestCase
             ->setDateFormat('d/m/y');
 
         $model = $this->generator->generateModel($config);
-        $this->assertEquals(file_get_contents(__DIR__ . '/resources/User-with-params.php.generated'), $model->render());
+        $a = $model->render();
+        $b = file_get_contents(__DIR__ . '/resources/User-with-params.php.generated');
+        $this->assertEquals($a, $b);
     }
 }

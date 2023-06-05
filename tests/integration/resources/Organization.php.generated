@@ -11,8 +11,14 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Organization extends Model
 {
+    /**
+     * @var array
+     */
     protected $fillable = ['name'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function users(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany('App\Models\User');

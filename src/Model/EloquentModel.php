@@ -80,7 +80,7 @@ class EloquentModel extends ClassModel
 
         $method = new MethodModel($name);
         $method->setBody($this->createRelationMethodBody($relation));
-        //$method->setDocBlock(new DocBlockModel($docBlock));
+        $method->setDocBlock(new DocBlockModel($docBlock));
         $method->setReturnType($this->addReturnType($relation));
 
         $this->addMethod($method);

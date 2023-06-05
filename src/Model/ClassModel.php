@@ -261,7 +261,7 @@ class ClassModel extends RenderableModel
             return !$property instanceof VirtualPropertyModel;
         });
         if (count($properties) > 0) {
-            $lines[] = $this->renderArrayLn($properties, 4, str_repeat(PHP_EOL, 1));
+            $lines[] = $this->renderArrayLn($properties, 4, str_repeat(PHP_EOL, 2));
         }
     }
 

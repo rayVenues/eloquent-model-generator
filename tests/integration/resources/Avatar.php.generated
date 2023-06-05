@@ -12,8 +12,14 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Avatar extends Model
 {
+    /**
+     * @var array
+     */
     protected $fillable = ['user_id', 'path'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo('App\Models\User');

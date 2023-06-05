@@ -16,25 +16,50 @@ use Base\ClassName;
  */
 class User extends ClassName
 {
+    /**
+     * Indicates if the model should be timestamped.
+     * @var bool
+     */
     public $timestamps = false;
+
+    /**
+     * The storage format of the model's date columns.
+     * @var string
+     */
     protected $dateFormat = 'd/m/y';
+
+    /**
+     * @var array
+     */
     protected $fillable = ['organization_id', 'username', 'is_active'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function avatar(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne('App\Avatar', 'user_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function posts(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany('App\Post', 'author_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function roles(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany('App\Role', 'user_roles');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function organization(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo('App\Organization');
