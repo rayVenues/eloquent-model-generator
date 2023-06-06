@@ -96,10 +96,12 @@ php artisan ray:generate:model User --connection='mysql'
 ### Overriding default options
 
 Instead of specifying options each time when executing the command you can publish the config file
-by executing the following command: 
+by executing the following command:
+
 ```BASH
 php artisan vendor:publish --provider="Ray\EloquentModelGenerator\Provider\GeneratorServiceProvider"
 ```
+
 This will create a file named `eloquent_model_generator.php` at project's `config` directory. You can
 modify the file with your own default values:
 
@@ -146,9 +148,9 @@ Table `user`:
 CREATE TABLE `users`
 (
     `id`       int(10) unsigned NOT NULL AUTO_INCREMENT,
+    `role_id`  int(10) unsigned NOT NULL,
     `username` varchar(50)      NOT NULL,
     `email`    varchar(100)     NOT NULL,
-    `role_id`  int(10) unsigned NOT NULL,
     PRIMARY KEY (`id`),
     KEY `role_id` (`role_id`),
     CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -164,6 +166,8 @@ php artisan ray:generate:model User
 
 Result:
 
+App\Models\User.php
+
 ```php
 <?php
 
@@ -173,51 +177,24 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property integer $id
- * @property integer $organization_id
+ * @property integer $role_id
  * @property string $username
- * @property integer $is_active
- * @property Avatar $avatar
- * @property Post[] $posts
- * @property UserRole[] $userRoles
- * @property Organization $organization
+ * @property string $email
+ * @property Role $role
  */
 class User extends Model
 {
     /**
      * @var array
      */
-    protected $fillable = ['organization_id', 'username', 'is_active'];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function avatar(): \Illuminate\Database\Eloquent\Relations\HasOne
-    {
-        return $this->hasOne('App\Models\Avatar', 'user_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function posts(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany('App\Models\Post', 'author_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function userRoles(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany('App\Models\UserRole');
-    }
+    protected $fillable = ['role_id', 'username', 'email'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function organization(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function role(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo('App\Models\Organization');
+        return $this->belongsTo('App\Models\Role');
     }
 }
 ```
@@ -260,6 +237,12 @@ class PerPageProcessor implements ProcessorInterface
         $dockBlockModel = new DocBlockModel('The number of models to return for pagination.', '', '@var int');
         $propertyModel->setDocBlock($dockBlockModel);
         $model->addProperty($propertyModel);
+        
+        $propertyModel = new PropertyModel('guarded', 'protected', []);
+        $dockBlockModel = new DocBlockModel('¡Tengo miedo!.', '', '@var array');
+        $propertyModel->setDocBlock($dockBlockModel);
+        $model->addProperty($propertyModel);
+
     }
 
     public function getPriority(): int
@@ -276,17 +259,26 @@ In your service provider:
 ```php
 public function register()
 {
-    $this->app->tag([InflectorRulesProcessor::class], [GeneratorServiceProvider::PROCESSOR_TAG]);
+    $this->app->tag([PerPageProcessor::class], [GeneratorServiceProvider::PROCESSOR_TAG]);
 }
 ```
 
 After that, generated models will contain the following code:
 
 ```php
+...
 /**
  * The number of models to return for pagination.
  * 
  * @var int
  */
 protected $perPage = 20;
+
+/**
+ * ¡Tengo miedo!.
+ * 
+ * @var array
+ */
+protected $guarded = [];
+...
 ```
