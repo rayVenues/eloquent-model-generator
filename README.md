@@ -167,45 +167,57 @@ Result:
 ```php
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property int $id
- * @property int $role_id
- * @property mixed $username
- * @property mixed $email
- * @property Role $role
- * @property Article[] $articles
- * @property Comment[] $comments
+ * @property integer $id
+ * @property integer $organization_id
+ * @property string $username
+ * @property integer $is_active
+ * @property Avatar $avatar
+ * @property Post[] $posts
+ * @property UserRole[] $userRoles
+ * @property Organization $organization
  */
 class User extends Model
 {
-    protected $fillable = ['role_id', 'username', 'email'];
+    /**
+     * @var array
+     */
+    protected $fillable = ['organization_id', 'username', 'is_active'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function avatar(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne('App\Models\Avatar', 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function posts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany('App\Models\Post', 'author_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function userRoles(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany('App\Models\UserRole');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function role(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function organization(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo('Role');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function articles(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany('Article');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany('Comment');
+        return $this->belongsTo('App\Models\Organization');
     }
 }
 ```
@@ -213,7 +225,7 @@ class User extends Model
 ## Generating models for all tables
 
 Command `ray:generate:models` will generate models for all tables in the database. It accepts all options available
-for `ray:generate:model` along with `skip-table` option.
+for `ray:generate:model` along with the `skip-table` option.
 
 ### skip-table
 
