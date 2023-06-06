@@ -4,6 +4,7 @@ namespace Ray\EloquentModelGenerator\Command;
 
 use Illuminate\Console\Command;
 use Illuminate\Database\DatabaseManager;
+use Ray\EloquentModelGenerator\Exception\GeneratorException;
 use Ray\EloquentModelGenerator\Generator;
 use Ray\EloquentModelGenerator\Helper\Prefix;
 use Symfony\Component\Console\Input\InputArgument;
@@ -21,6 +22,9 @@ class GenerateModelCommand extends Command
         parent::__construct();
     }
 
+    /**
+     * @throws GeneratorException
+     */
     public function handle(): void
     {
         $config = $this->createConfig();

@@ -2,9 +2,10 @@
 
 namespace Ray\EloquentModelGenerator\Command;
 
-use Illuminate\Config\Repository as AppConfig;
+use Doctrine\DBAL\Exception;
 use Illuminate\Console\Command;
 use Illuminate\Database\DatabaseManager;
+use Ray\EloquentModelGenerator\Exception\GeneratorException;
 use Ray\EloquentModelGenerator\Generator;
 use Ray\EloquentModelGenerator\Helper\EmgHelper;
 use Ray\EloquentModelGenerator\Helper\Prefix;
@@ -16,11 +17,15 @@ class GenerateModelsCommand extends Command
 
     protected $name = 'ray:generate:models';
 
-    public function __construct(private Generator $generator, private DatabaseManager $databaseManager)
+    public function __construct(private readonly Generator $generator, private readonly DatabaseManager $databaseManager)
     {
         parent::__construct();
     }
 
+    /**
+     * @throws GeneratorException
+     * @throws Exception
+     */
     public function handle(): void
     {
         $config = $this->createConfig();

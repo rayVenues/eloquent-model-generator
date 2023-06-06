@@ -31,7 +31,7 @@ class ArgumentModel extends RenderableModel
      * @param string|null $type
      * @param mixed|null $default
      */
-    public function __construct(string $name, $type = null, $default = null)
+    public function __construct(string $name, string $type = null, mixed $default = null)
     {
         $this->setName($name)
             ->setType($type)
@@ -43,17 +43,13 @@ class ArgumentModel extends RenderableModel
      */
     public function toLines(): string
     {
-        if ($this->type !== null) {
-            return $this->type . ' $' . $this->name;
-        } else {
-            return '$' . $this->name;
-        }
+      return $this->type . ' $' . $this->name;
     }
 
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -63,7 +59,7 @@ class ArgumentModel extends RenderableModel
      *
      * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): static
     {
         $this->name = $name;
 
@@ -71,9 +67,9 @@ class ArgumentModel extends RenderableModel
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -83,7 +79,7 @@ class ArgumentModel extends RenderableModel
      *
      * @return $this
      */
-    public function setType($type)
+    public function setType(mixed $type): static
     {
         $this->type = $type;
 
@@ -93,7 +89,7 @@ class ArgumentModel extends RenderableModel
     /**
      * @return mixed
      */
-    public function getDefault()
+    public function getDefault(): mixed
     {
         return $this->default;
     }
@@ -103,7 +99,7 @@ class ArgumentModel extends RenderableModel
      *
      * @return $this
      */
-    public function setDefault($default)
+    public function setDefault(mixed $default): static
     {
         $this->default = $default;
 

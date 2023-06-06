@@ -2,6 +2,7 @@
 
 namespace Ray\EloquentModelGenerator\EventListener;
 
+use Doctrine\DBAL\Exception;
 use Illuminate\Console\Events\CommandStarting;
 use Ray\EloquentModelGenerator\TypeRegistry;
 
@@ -14,6 +15,9 @@ class GenerateCommandEventListener
 
     public function __construct(private readonly TypeRegistry $typeRegistry) {}
 
+    /**
+     * @throws Exception
+     */
     public function handle(CommandStarting $event): void
     {
         if (!in_array($event->command, self::SUPPORTED_COMMANDS)) {
