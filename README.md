@@ -95,8 +95,13 @@ php artisan ray:generate:model User --connection='mysql'
 
 ### Overriding default options
 
-Instead of specifying options each time when executing the command you can create a config file
-named `eloquent_model_generator.php` at project's `config` directory with your own default values:
+Instead of specifying options each time when executing the command you can publish the config file
+by calling 
+```BASH
+php artisan vendor:publish --provider="Ray\EloquentModelGenerator\Provider\GeneratorServiceProvider"
+```
+This will create a file named `eloquent_model_generator.php` at project's `config` directory. You can
+modify the file with your own default values:
 
 ```php
 <?php
@@ -124,7 +129,7 @@ Unknown database type <TYPE> requested, Doctrine\DBAL\Platforms\MySqlPlatform ma
 
 it means that you must register your type `<TYPE>` at your `config/eloquent_model_generator.php`:
 
-```
+```PHP
 return [
     // ...
     'db_types' => [
@@ -153,7 +158,7 @@ CREATE TABLE `users`
 
 Command:
 
-```
+```BASH
 php artisan ray:generate:model User
 ```
 
