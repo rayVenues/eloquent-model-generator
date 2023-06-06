@@ -16,6 +16,7 @@ class GenerateModelsCommand extends Command
     use GenerateCommandTrait;
 
     protected $name = 'ray:generate:models';
+    protected $description = 'Generate all model classes based on a database table. You can skip tables with --skip-table option.';
 
     public function __construct(private readonly Generator $generator, private readonly DatabaseManager $databaseManager)
     {
@@ -34,6 +35,9 @@ class GenerateModelsCommand extends Command
         $schemaManager = $this->databaseManager->connection($config->getConnection())->getDoctrineSchemaManager();
         $tables = $schemaManager->listTables();
         $skipTables = $this->option('skip-table');
+        if (count($skipTables) === 1 && str_contains($skipTables[0], ',')) {
+            $skipTables = explode(',', $skipTables[0]);
+        }
         foreach ($tables as $table) {
             $tableName = Prefix::remove($table->getName());
             if (in_array($tableName, $skipTables)) {

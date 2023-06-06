@@ -11,10 +11,10 @@ use Base\ClassName;
  * @property integer $is_active
  * @property Avatar $avatar
  * @property Post[] $posts
- * @property UserRole[] $userRoles
  * @property Organization $organization
+ * @property UserRole[] $userRoles
  */
-class User extends ClassName
+class UserModel extends ClassName
 {
     /**
      * Indicates if the model should be timestamped.
@@ -50,18 +50,18 @@ class User extends ClassName
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function userRoles(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany('App\UserRole');
-    }
-
-    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function organization(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo('App\Organization');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function userRoles(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany('App\UserRole', 'user_id');
     }
 }

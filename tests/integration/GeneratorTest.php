@@ -99,12 +99,27 @@ class GeneratorTest extends TestCase
             ->setClassName('User')
             ->setNamespace('App')
             ->setBaseClassName('Base\ClassName')
-            ->setNoTimestamps(true)
+            ->setNoTimestamps()
             ->setDateFormat('d/m/y');
 
         $model = $this->generator->generateModel($config);
         $a = $model->render();
         $b = file_get_contents(__DIR__ . '/resources/User-with-params.php.generated');
+        $this->assertEquals($a, $b);
+    }
+
+    public function testGeneratedModelCustomClassName(): void
+    {
+        $config = (new Config())
+            ->setClassName('UserModel')
+            ->setNamespace('App')
+            ->setBaseClassName('Base\ClassName')
+            ->setNoTimestamps()
+            ->setDateFormat('d/m/y');
+
+        $model = $this->generator->generateModel($config);
+        $a = $model->render();
+        $b = file_get_contents(__DIR__ . '/resources/User-with-custom-classname.php.generated');
         $this->assertEquals($a, $b);
     }
 }

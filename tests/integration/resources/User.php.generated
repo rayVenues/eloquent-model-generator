@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $is_active
  * @property Avatar $avatar
  * @property Post[] $posts
- * @property Role[] $roles
+ * @property UserRole[] $userRoles
  * @property Organization $organization
  */
 class User extends Model
@@ -38,11 +38,11 @@ class User extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function roles(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function userRoles(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->belongsToMany('App\Models\Role', 'user_roles');
+        return $this->hasMany('App\Models\UserRole');
     }
 
     /**

@@ -4,13 +4,14 @@ namespace Ray\EloquentModelGenerator\Config;
 
 class Config
 {
-    private ?string $className = null;
-    private ?string $tableName = null;
-    private ?string $namespace = null;
+    private ?bool $noBackup = false;
+    private ?bool $noTimestamps = false;
     private ?string $baseClassName = null;
-    private ?bool $noTimestamps = null;
-    private ?string $dateFormat = null;
+    private ?string $className = null;
     private ?string $connection = null;
+    private ?string $dateFormat = null;
+    private ?string $namespace = null;
+    private ?string $tableName = null;
 
     public function getClassName(): ?string
     {
@@ -65,9 +66,9 @@ class Config
         return $this->noTimestamps;
     }
 
-    public function setNoTimestamps(?bool $noTimestamps): self
+    public function setNoTimestamps(bool|null $flag = null): self
     {
-        $this->noTimestamps = $noTimestamps;
+        $this->noTimestamps = $flag ?? true;
 
         return $this;
     }
@@ -92,6 +93,18 @@ class Config
     public function setConnection(?string $connection): self
     {
         $this->connection = $connection;
+
+        return $this;
+    }
+
+    public function getNoBackup(): ?bool
+    {
+        return $this->noBackup;
+    }
+
+    public function setNoBackup(): self
+    {
+        $this->noBackup = true;
 
         return $this;
     }

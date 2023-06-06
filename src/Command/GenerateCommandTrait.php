@@ -30,10 +30,13 @@ trait GenerateCommandTrait
         $content = $model->render();
 
         $outputFilepath = $this->resolveOutputPath() . '/' . $model->getName()->getName() . '.php';
-        if (!$this->option('no-backup') && file_exists($outputFilepath)) {
+        if ($this->option('no-backup') !== null && file_exists($outputFilepath)) {
             rename($outputFilepath, $outputFilepath . '~');
         }
-        file_put_contents($outputFilepath, $content);
+        $bytesWritten = file_put_contents($outputFilepath, $content);
+        if ($bytesWritten === false) {
+            throw new GeneratorException(sprintf('Could not write to %s', $outputFilepath));
+        }
     }
 
     /**
@@ -44,17 +47,17 @@ trait GenerateCommandTrait
         $path = $this->option('output-path');
         if ($path === null) {
             $path = App::path('Models');
-        } elseif (!str_starts_with($path, '/')) {
+        } elseif (! str_starts_with($path, '/')) {
             $path = App::path($path);
         }
 
-        if (!is_dir($path)) {
-            if (!mkdir($path, 0777, true)) {
+        if (! is_dir($path)) {
+            if (! mkdir($path, 0777, true)) {
                 throw new GeneratorException(sprintf('Could not create directory %s', $path));
             }
         }
 
-        if (!is_writeable($path)) {
+        if (! is_writeable($path)) {
             throw new GeneratorException(sprintf('%s is not writeable', $path));
         }
 

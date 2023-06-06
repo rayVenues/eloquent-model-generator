@@ -48,5 +48,9 @@ class GeneratorServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Event::listen(CommandStarting::class, [GenerateCommandEventListener::class, 'handle']);
+
+        $this->publishes([
+            __DIR__ . '/../Config/eloquent-model-generator.php' => config_path('eloquent-model-generator.php'),
+        ]);
     }
 }

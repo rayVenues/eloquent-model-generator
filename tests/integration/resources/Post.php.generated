@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $title
  * @property string $content
  * @property User $user
+ * @property UserModel $userModel
  */
 class Post extends Model
 {
@@ -24,5 +25,13 @@ class Post extends Model
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo('App\Models\User', 'author_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function userModel(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo('App\Models\UserModel', 'author_id');
     }
 }

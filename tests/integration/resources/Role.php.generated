@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property integer $id
  * @property string $name
- * @property User[] $users
+ * @property UserRole[] $userRoles
  */
 class Role extends Model
 {
@@ -17,10 +17,10 @@ class Role extends Model
     protected $fillable = ['name'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function userRoles(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->belongsToMany('App\Models\User', 'user_roles');
+        return $this->hasMany('App\Models\UserRole');
     }
 }

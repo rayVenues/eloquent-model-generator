@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $user_id
  * @property string $path
  * @property User $user
+ * @property UserModel $userModel
  */
 class Avatar extends Model
 {
@@ -23,5 +24,13 @@ class Avatar extends Model
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo('App\Models\User');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function userModel(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo('App\Models\UserModel', 'user_id');
     }
 }

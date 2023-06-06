@@ -14,9 +14,10 @@ class GenerateModelCommand extends Command
     use GenerateCommandTrait;
 
     protected $name = 'ray:generate:model';
+    protected $description = 'Generate a model class based on a database table';
 
     public function __construct(
-        private readonly Generator $generator,
+        private readonly Generator       $generator,
         private readonly DatabaseManager $databaseManager)
     {
         parent::__construct();
