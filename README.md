@@ -74,7 +74,7 @@ php artisan ray:generate:model User --no-backup
 If you want to disable timestamps for the model, specify `--no-timestamps` option:
 
 ```BASH
-php artisan ray:generate:model User --no-timestamps=true
+php artisan ray:generate:model User --no-timestamps
 ```
 
 ### date-format
