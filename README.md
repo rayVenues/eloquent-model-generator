@@ -10,15 +10,7 @@ Step 1. Add Eloquent Model Generator to your project:
 ```
 composer require rayvenues/eloquent-model-generator --dev
 ```
-Step 2. Register `GeneratorServiceProvider`:
-```php
-'providers' => [
-    // ...
-    Ray\EloquentModelGenerator\Provider\GeneratorServiceProvider::class,
-];
-```
-
-Step 3. Configure your database connection.
+Step 2. Configure your database connection.
 
 ## Usage
 Use
