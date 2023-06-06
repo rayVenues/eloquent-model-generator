@@ -96,7 +96,7 @@ php artisan ray:generate:model User --connection='mysql'
 ### Overriding default options
 
 Instead of specifying options each time when executing the command you can publish the config file
-by calling 
+by executing the following command: 
 ```BASH
 php artisan vendor:publish --provider="Ray\EloquentModelGenerator\Provider\GeneratorServiceProvider"
 ```
