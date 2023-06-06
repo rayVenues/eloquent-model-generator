@@ -2,6 +2,14 @@
     "name": "rayvenues/eloquent-model-generator",
     "description": "Eloquent Model Generator",
     "license": "MIT",
+    "type": "library",
+    "keywords": [
+        "eloquent",
+        "model",
+        "generator",
+        "laravel",
+        "php"
+    ],
     "autoload": {
         "psr-4": {
             "Ray\\EloquentModelGenerator\\": "src/"
@@ -18,11 +26,11 @@
         "illuminate/support": "^10.0",
         "illuminate/config": "^10.0",
         "illuminate/console": "^10.0",
-        "doctrine/dbal": "^3.7"
+        "doctrine/dbal": "^3.3"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.2",
-        "pestphp/pest": "^2"
+        "pestphp/pest": "^2.0"
     },
     "extra": {
         "laravel": {
@@ -36,5 +44,5 @@
             "pestphp/pest-plugin": true
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }
