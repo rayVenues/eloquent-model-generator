@@ -14,12 +14,14 @@ class GenerateModelCommand extends Command
 
     protected $name = 'ray:generate:model';
 
-    public function __construct(private Generator $generator, private DatabaseManager $databaseManager)
+    public function __construct(
+        private readonly Generator $generator,
+        private readonly DatabaseManager $databaseManager)
     {
         parent::__construct();
     }
 
-    public function handle()
+    public function handle(): void
     {
         $config = $this->createConfig();
         $config->setClassName($this->argument('class-name'));
@@ -31,14 +33,14 @@ class GenerateModelCommand extends Command
         $this->output->writeln(sprintf('Model %s generated', $model->getName()->getName()));
     }
 
-    protected function getArguments()
+    protected function getArguments(): array
     {
         return [
             ['class-name', InputArgument::REQUIRED, 'Model class name'],
         ];
     }
 
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return $this->getCommonOptions();
     }

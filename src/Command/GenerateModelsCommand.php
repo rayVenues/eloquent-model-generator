@@ -21,7 +21,7 @@ class GenerateModelsCommand extends Command
         parent::__construct();
     }
 
-    public function handle()
+    public function handle(): void
     {
         $config = $this->createConfig();
         Prefix::setPrefix($this->databaseManager->connection($config->getConnection())->getTablePrefix());
@@ -43,7 +43,7 @@ class GenerateModelsCommand extends Command
         }
     }
 
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return array_merge(
             $this->getCommonOptions(),

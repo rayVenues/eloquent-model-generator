@@ -10,15 +10,20 @@ use Ray\EloquentModelGenerator\Model\DocBlockModel;
  */
 trait DocBlockTrait
 {
+    public function __construct()
+    {
+        $this->docBlock = new DocBlockModel();
+    }
+
     /**
      * @var DocBlockModel
      */
-    protected $docBlock;
+    protected DocBlockModel $docBlock;
 
     /**
      * @return DocBlockModel
      */
-    public function getDocBlock()
+    public function getDocBlock(): DocBlockModel
     {
         return $this->docBlock;
     }
@@ -28,7 +33,7 @@ trait DocBlockTrait
      *
      * @return $this
      */
-    public function setDocBlock($docBlock)
+    public function setDocBlock(DocBlockModel $docBlock): static
     {
         $this->docBlock = $docBlock;
 

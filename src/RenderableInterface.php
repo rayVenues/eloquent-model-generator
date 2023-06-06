@@ -13,5 +13,5 @@ interface RenderableInterface
      * @param string $delimiter
      * @return string
      */
-    public function render($indent = 0, $delimiter = PHP_EOL);
+    public function render(int $indent = 0, string $delimiter = PHP_EOL): string;
 }

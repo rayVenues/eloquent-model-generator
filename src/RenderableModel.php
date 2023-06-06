@@ -13,7 +13,7 @@ abstract class RenderableModel implements RenderableInterface, LineableInterface
     /**
      * {@inheritDoc}
      */
-    final public function render($indent = 0, $delimiter = PHP_EOL)
+    final public function render(int $indent = 0, string $delimiter = PHP_EOL): string
     {
         $this->validate();
         $lines = $this->toLines();
@@ -34,7 +34,7 @@ abstract class RenderableModel implements RenderableInterface, LineableInterface
     /**
      * @return bool
      */
-    protected function validate()
+    protected function validate(): bool
     {
         return true;
     }
@@ -46,7 +46,7 @@ abstract class RenderableModel implements RenderableInterface, LineableInterface
      * @return string
      * @throws GeneratorException
      */
-    protected function renderArrayLn(array $array, $indent = 0, $delimiter = PHP_EOL)
+    protected function renderArrayLn(array $array, int $indent = 0, string $delimiter = PHP_EOL): string
     {
         return $this->ln($this->renderArray($array, $indent, $delimiter));
     }
@@ -58,7 +58,7 @@ abstract class RenderableModel implements RenderableInterface, LineableInterface
      * @return string
      * @throws GeneratorException
      */
-    protected function renderArray(array $array, $indent = 0, $delimiter = PHP_EOL)
+    protected function renderArray(array $array, int $indent = 0, string $delimiter = PHP_EOL): string
     {
         $lines = [];
         foreach ($array as $item) {
@@ -76,7 +76,7 @@ abstract class RenderableModel implements RenderableInterface, LineableInterface
      * @param string $line
      * @return string
      */
-    protected function ln($line)
+    protected function ln(string $line): string
     {
         return $line . PHP_EOL;
     }

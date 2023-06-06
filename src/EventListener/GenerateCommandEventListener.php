@@ -12,7 +12,7 @@ class GenerateCommandEventListener
         'ray:generate:models',
     ];
 
-    public function __construct(private TypeRegistry $typeRegistry) {}
+    public function __construct(private readonly TypeRegistry $typeRegistry) {}
 
     public function handle(CommandStarting $event): void
     {

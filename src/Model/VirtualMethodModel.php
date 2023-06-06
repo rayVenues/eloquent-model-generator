@@ -11,14 +11,14 @@ class VirtualMethodModel extends BaseMethodModel
     /**
      * @var string
      */
-    protected $type;
+    protected string $type;
 
     /**
      * VirtualMethodModel constructor.
      * @param string $name
-     * @param string $type
+     * @param string|null $type
      */
-    public function __construct($name, $type = null)
+    public function __construct(string $name, string $type = null)
     {
         $this->setName($name)
             ->setType($type);
@@ -27,7 +27,7 @@ class VirtualMethodModel extends BaseMethodModel
     /**
      * {@inheritDoc}
      */
-    public function toLines()
+    public function toLines(): string
     {
         $type = $this->type ?: 'void';
 
@@ -37,7 +37,7 @@ class VirtualMethodModel extends BaseMethodModel
     /**
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -47,7 +47,7 @@ class VirtualMethodModel extends BaseMethodModel
      *
      * @return $this
      */
-    public function setType($type)
+    public function setType(string $type): static
     {
         $this->type = $type;
 

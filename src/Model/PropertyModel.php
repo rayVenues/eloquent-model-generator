@@ -22,7 +22,7 @@ class PropertyModel extends BasePropertyModel
     /**
      * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * PropertyModel constructor.
@@ -30,7 +30,7 @@ class PropertyModel extends BasePropertyModel
      * @param string $access
      * @param mixed|null $value
      */
-    public function __construct($name, $access = 'public', $value = null)
+    public function __construct(string $name, string $access = 'public', mixed $value = null)
     {
         $this->setName($name)
             ->setAccess($access)
@@ -40,12 +40,10 @@ class PropertyModel extends BasePropertyModel
     /**
      * {@inheritDoc}
      */
-    public function toLines()
+    public function toLines(): string|array
     {
         $lines = [];
-        if ($this->docBlock !== null) {
-            $lines = array_merge($lines, $this->docBlock->toLines());
-        }
+        $lines = array_merge($lines, $this->docBlock->toLines());
 
         $property = $this->access . ' ';
         if ($this->static) {

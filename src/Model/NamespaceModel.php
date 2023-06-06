@@ -13,13 +13,13 @@ class NamespaceModel extends RenderableModel
     /**
      * @var string
      */
-    protected $namespace;
+    protected string $namespace;
 
     /**
      * PHPClassNamespace constructor.
      * @param string $namespace
      */
-    public function __construct($namespace)
+    public function __construct(string $namespace)
     {
         $this->setNamespace($namespace);
     }
@@ -27,7 +27,7 @@ class NamespaceModel extends RenderableModel
     /**
      * {@inheritDoc}
      */
-    public function toLines()
+    public function toLines(): string
     {
         return sprintf('namespace %s;', $this->namespace);
     }
@@ -35,7 +35,7 @@ class NamespaceModel extends RenderableModel
     /**
      * @return string
      */
-    public function getNamespace()
+    public function getNamespace(): string
     {
         return $this->namespace;
     }
@@ -45,7 +45,7 @@ class NamespaceModel extends RenderableModel
      *
      * @return $this
      */
-    public function setNamespace($namespace)
+    public function setNamespace(string $namespace): static
     {
         $this->namespace = $namespace;
 

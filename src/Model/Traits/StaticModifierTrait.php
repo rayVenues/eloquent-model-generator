@@ -11,12 +11,12 @@ trait StaticModifierTrait
     /**
      * @var boolean
      */
-    protected $static;
+    protected bool $static = false;
 
     /**
      * @return boolean
      */
-    public function isStatic()
+    public function isStatic(): bool
     {
         return $this->static;
     }
@@ -26,9 +26,9 @@ trait StaticModifierTrait
      *
      * @return $this
      */
-    public function setStatic($static = true)
+    public function setStatic(bool $static = true): static
     {
-        $this->static = boolval($static);
+        $this->static = $static;
 
         return $this;
     }

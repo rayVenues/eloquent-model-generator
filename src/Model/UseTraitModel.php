@@ -13,13 +13,13 @@ class UseTraitModel extends RenderableModel
     /**
      * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * PHPClassTrait constructor.
      * @param string $name
      */
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->setName($name);
     }
@@ -27,7 +27,7 @@ class UseTraitModel extends RenderableModel
     /**
      * {@inheritDoc}
      */
-    public function toLines()
+    public function toLines(): string
     {
         return sprintf('use %s;', $this->name);
     }
@@ -35,7 +35,7 @@ class UseTraitModel extends RenderableModel
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -45,7 +45,7 @@ class UseTraitModel extends RenderableModel
      *
      * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): static
     {
         $this->name = $name;
 

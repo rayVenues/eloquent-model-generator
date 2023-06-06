@@ -11,12 +11,12 @@ trait ValueTrait
     /**
      * @var mixed
      */
-    protected $value;
+    protected mixed $value;
 
     /**
      * @return mixed
      */
-    public function getValue()
+    public function getValue(): mixed
     {
         return $this->value;
     }
@@ -26,7 +26,7 @@ trait ValueTrait
      *
      * @return $this
      */
-    public function setValue($value)
+    public function setValue(mixed $value): static
     {
         $this->value = $value;
 
@@ -36,7 +36,7 @@ trait ValueTrait
     /**
      * @return string|null
      */
-    protected function renderValue()
+    protected function renderValue(): ?string
     {
         return $this->renderTyped($this->value);
     }
@@ -45,7 +45,7 @@ trait ValueTrait
      * @param mixed $value
      * @return string|null
      */
-    protected function renderTyped($value)
+    protected function renderTyped(mixed $value): ?string
     {
         $type = gettype($value);
 

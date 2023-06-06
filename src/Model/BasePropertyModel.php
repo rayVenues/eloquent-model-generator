@@ -13,12 +13,12 @@ abstract class BasePropertyModel extends RenderableModel
     /**
      * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -28,7 +28,7 @@ abstract class BasePropertyModel extends RenderableModel
      *
      * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): static
     {
         $this->name = $name;
 

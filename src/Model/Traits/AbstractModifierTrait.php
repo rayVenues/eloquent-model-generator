@@ -11,12 +11,12 @@ trait AbstractModifierTrait
     /**
      * @var boolean;
      */
-    protected $abstract;
+    protected bool $abstract = false;
 
     /**
      * @return boolean
      */
-    public function isAbstract()
+    public function isAbstract(): bool
     {
         return $this->abstract;
     }
@@ -26,9 +26,9 @@ trait AbstractModifierTrait
      *
      * @return $this
      */
-    public function setAbstract($abstract = true)
+    public function setAbstract(bool $abstract = true): static
     {
-        $this->abstract = boolval($abstract);
+        $this->abstract = $abstract;
 
         return $this;
     }

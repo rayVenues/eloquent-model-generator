@@ -13,17 +13,17 @@ class ArgumentModel extends RenderableModel
     /**
      * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * @var string
      */
-    protected $type;
+    protected string $type;
 
     /**
      * @var mixed
      */
-    protected $default;
+    protected mixed $default;
 
     /**
      * ArgumentModel constructor.
@@ -31,7 +31,7 @@ class ArgumentModel extends RenderableModel
      * @param string|null $type
      * @param mixed|null $default
      */
-    public function __construct($name, $type = null, $default = null)
+    public function __construct(string $name, $type = null, $default = null)
     {
         $this->setName($name)
             ->setType($type)
@@ -41,7 +41,7 @@ class ArgumentModel extends RenderableModel
     /**
      * {@inheritDoc}
      */
-    public function toLines()
+    public function toLines(): string
     {
         if ($this->type !== null) {
             return $this->type . ' $' . $this->name;

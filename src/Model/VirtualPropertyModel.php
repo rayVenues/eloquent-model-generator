@@ -13,24 +13,24 @@ class VirtualPropertyModel extends BasePropertyModel
     /**
      * @var string
      */
-    protected $type;
+    protected string $type;
 
     /**
      * @var boolean
      */
-    protected $readable = true;
+    protected bool $readable = true;
 
     /**
-     * @var
+     * @bool
      */
-    protected $writable = true;
+    protected bool $writable = true;
 
     /**
      * VirtualPropertyModel constructor.
      * @param string $name
-     * @param string $type
+     * @param string|null $type
      */
-    public function __construct($name, $type = null)
+    public function __construct(string $name, string $type = null)
     {
         $this->setName($name)
             ->setType($type);
@@ -39,7 +39,7 @@ class VirtualPropertyModel extends BasePropertyModel
     /**
      * {@inheritDoc}
      */
-    public function toLines()
+    public function toLines(): string
     {
         $property = '@property';
         if (!$this->readable) {
@@ -48,9 +48,7 @@ class VirtualPropertyModel extends BasePropertyModel
             $property .= '-read';
         }
 
-        if ($this->type !== null) {
-            $property .= ' ' . $this->type;
-        }
+        $property .= ' ' . $this->type;
 
         return $property . ' $' . $this->name;
     }
@@ -58,7 +56,7 @@ class VirtualPropertyModel extends BasePropertyModel
     /**
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -68,7 +66,7 @@ class VirtualPropertyModel extends BasePropertyModel
      *
      * @return $this
      */
-    public function setType($type)
+    public function setType(string $type): static
     {
         $this->type = $type;
 
@@ -78,7 +76,7 @@ class VirtualPropertyModel extends BasePropertyModel
     /**
      * @return boolean
      */
-    public function isReadable()
+    public function isReadable(): bool
     {
         return $this->readable;
     }
@@ -88,7 +86,7 @@ class VirtualPropertyModel extends BasePropertyModel
      *
      * @return $this
      */
-    public function setReadable($readable = true)
+    public function setReadable(bool $readable = true): static
     {
         $this->readable = $readable;
 
@@ -96,19 +94,19 @@ class VirtualPropertyModel extends BasePropertyModel
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getWritable()
+    public function getWritable(): bool
     {
         return $this->writable;
     }
 
     /**
-     * @param mixed $writable
+     * @param bool $writable
      *
      * @return $this
      */
-    public function setWritable($writable = true)
+    public function setWritable(bool $writable = true): static
     {
         $this->writable = $writable;
 
@@ -117,11 +115,13 @@ class VirtualPropertyModel extends BasePropertyModel
 
     /**
      * {@inheritDoc}
+     * @throws ValidationException
      */
-    protected function validate()
+    protected function validate(): bool
     {
         if (!$this->readable && !$this->writable) {
-            throw new ValidationException('Property cannot be unreadable and unwritable at the same time');
+            throw new ValidationException('Property cannot be unreadable and un-writable at the same time');
         }
+        return true;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Ray\EloquentModelGenerator\Processor;
 
+use Doctrine\DBAL\Exception;
 use Illuminate\Database\DatabaseManager;
 use Ray\EloquentModelGenerator\Model\ClassNameModel;
 use Ray\EloquentModelGenerator\Model\DocBlockModel;
@@ -15,8 +16,12 @@ use Ray\EloquentModelGenerator\Model\EloquentModel;
 
 class TableNameProcessor implements ProcessorInterface
 {
-    public function __construct(private DatabaseManager $databaseManager) {}
+    public function __construct(private readonly DatabaseManager $databaseManager) {}
 
+    /**
+     * @throws GeneratorException
+     * @throws Exception
+     */
     public function process(EloquentModel $model, Config $config): void
     {
         $className = $config->getClassName();

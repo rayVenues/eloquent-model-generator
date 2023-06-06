@@ -16,14 +16,14 @@ class ConstantModel extends RenderableModel
     /**
      * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * PHPClassConstant constructor.
      * @param string $name
      * @param mixed $value
      */
-    public function __construct($name, $value)
+    public function __construct(string $name, mixed $value)
     {
         $this->setName($name);
         $this->setValue($value);
@@ -32,7 +32,7 @@ class ConstantModel extends RenderableModel
     /**
      * {@inheritDoc}
      */
-    public function toLines()
+    public function toLines(): string
     {
         $value = $this->renderValue();
 
@@ -42,7 +42,7 @@ class ConstantModel extends RenderableModel
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -52,7 +52,7 @@ class ConstantModel extends RenderableModel
      *
      * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): static
     {
         $this->name = $name;
 

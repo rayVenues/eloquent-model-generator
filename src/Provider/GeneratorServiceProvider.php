@@ -21,7 +21,7 @@ class GeneratorServiceProvider extends ServiceProvider
 {
     public const PROCESSOR_TAG = 'eloquent_model_generator.processor';
 
-    public function register()
+    public function register(): void
     {
         $this->commands([
             GenerateModelCommand::class,
@@ -45,7 +45,7 @@ class GeneratorServiceProvider extends ServiceProvider
         });
     }
 
-    public function boot()
+    public function boot(): void
     {
         Event::listen(CommandStarting::class, [GenerateCommandEventListener::class, 'handle']);
     }

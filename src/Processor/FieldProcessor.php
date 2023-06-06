@@ -2,6 +2,7 @@
 
 namespace Ray\EloquentModelGenerator\Processor;
 
+use Doctrine\DBAL\Exception;
 use Illuminate\Database\DatabaseManager;
 use Ray\EloquentModelGenerator\Model\DocBlockModel;
 use Ray\EloquentModelGenerator\Model\PropertyModel;
@@ -13,8 +14,11 @@ use Ray\EloquentModelGenerator\TypeRegistry;
 
 class FieldProcessor implements ProcessorInterface
 {
-    public function __construct(private DatabaseManager $databaseManager, private TypeRegistry $typeRegistry) {}
+    public function __construct(private readonly DatabaseManager $databaseManager, private readonly TypeRegistry $typeRegistry) {}
 
+    /**
+     * @throws Exception
+     */
     public function process(EloquentModel $model, Config $config): void
     {
         $schemaManager = $this->databaseManager->connection($config->getConnection())->getDoctrineSchemaManager();

@@ -13,7 +13,7 @@ class DocBlockModel extends RenderableModel
     /**
      * @var array
      */
-    protected $content = [];
+    protected array $content = [];
 
     /**
      * DocBlockModel constructor.
@@ -29,7 +29,7 @@ class DocBlockModel extends RenderableModel
     /**
      * {@inheritDoc}
      */
-    public function toLines()
+    public function toLines(): array
     {
         $lines = [];
         $lines[] = '/**';
@@ -48,7 +48,7 @@ class DocBlockModel extends RenderableModel
     /**
      * @return array
      */
-    public function getContent()
+    public function getContent(): array
     {
         return $this->content;
     }
@@ -58,7 +58,7 @@ class DocBlockModel extends RenderableModel
      *
      * @return $this
      */
-    public function addContent($content)
+    public function addContent(array | string $content): static
     {
         if (is_array($content)) {
             foreach ($content as $item) {

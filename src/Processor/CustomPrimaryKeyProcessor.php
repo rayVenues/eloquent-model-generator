@@ -2,19 +2,24 @@
 
 namespace Ray\EloquentModelGenerator\Processor;
 
-use Ray\EloquentModelGenerator\Processor\ProcessorInterface;
+use Doctrine\DBAL\Exception;
+use Doctrine\DBAL\Schema\SchemaException;
 use Illuminate\Database\DatabaseManager;
-use Ray\EloquentModelGenerator\Model\DocBlockModel;
-use Ray\EloquentModelGenerator\Model\PropertyModel;
 use Ray\EloquentModelGenerator\Config\Config;
 use Ray\EloquentModelGenerator\Helper\Prefix;
+use Ray\EloquentModelGenerator\Model\DocBlockModel;
 use Ray\EloquentModelGenerator\Model\EloquentModel;
+use Ray\EloquentModelGenerator\Model\PropertyModel;
 use Ray\EloquentModelGenerator\TypeRegistry;
 
 class CustomPrimaryKeyProcessor implements ProcessorInterface
 {
-    public function __construct(private DatabaseManager $databaseManager, private TypeRegistry $typeRegistry) {}
+    public function __construct(private readonly DatabaseManager $databaseManager, private readonly TypeRegistry $typeRegistry) {}
 
+    /**
+     * @throws Exception
+     * @throws SchemaException
+     */
     public function process(EloquentModel $model, Config $config): void
     {
         $schemaManager = $this->databaseManager->connection($config->getConnection())->getDoctrineSchemaManager();

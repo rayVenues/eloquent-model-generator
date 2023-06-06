@@ -134,16 +134,25 @@ class User extends Model
 {
     protected $fillable = ['role_id', 'username', 'email'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function role(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo('Role');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function articles(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany('Article');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany('Comment');

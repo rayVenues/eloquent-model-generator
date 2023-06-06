@@ -11,12 +11,12 @@ trait AccessModifierTrait
     /**
      * @var string
      */
-    protected $access;
+    protected string $access;
 
     /**
      * @return string
      */
-    public function getAccess()
+    public function getAccess(): string
     {
         return $this->access;
     }
@@ -26,7 +26,7 @@ trait AccessModifierTrait
      *
      * @return $this
      */
-    public function setAccess($access)
+    public function setAccess(string $access): static
     {
         if (!in_array($access, ['private', 'protected', 'public'])) {
             $access = 'public';

@@ -2,8 +2,10 @@
 
 namespace Ray\EloquentModelGenerator\Processor;
 
+use Doctrine\DBAL\Exception;
 use Illuminate\Database\DatabaseManager;
 use Ray\EloquentModelGenerator\Config\Config;
+use Ray\EloquentModelGenerator\Exception\GeneratorException;
 use Ray\EloquentModelGenerator\Helper\EmgHelper;
 use Ray\EloquentModelGenerator\Helper\Prefix;
 use Ray\EloquentModelGenerator\Model\BelongsTo;
@@ -14,8 +16,12 @@ use Ray\EloquentModelGenerator\Model\HasOne;
 
 class RelationProcessor implements ProcessorInterface
 {
-    public function __construct(private DatabaseManager $databaseManager) {}
+    public function __construct(private readonly DatabaseManager $databaseManager) {}
 
+    /**
+     * @throws GeneratorException
+     * @throws Exception
+     */
     public function process(EloquentModel $model, Config $config): void
     {
         $schemaManager = $this->databaseManager->connection($config->getConnection())->getDoctrineSchemaManager();

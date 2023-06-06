@@ -13,17 +13,17 @@ abstract class BaseMethodModel extends RenderableModel
     /**
      * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * @var ArgumentModel[]
      */
-    protected $arguments = [];
+    protected array $arguments = [];
 
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -33,7 +33,7 @@ abstract class BaseMethodModel extends RenderableModel
      *
      * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): static
     {
         $this->name = $name;
 
@@ -43,7 +43,7 @@ abstract class BaseMethodModel extends RenderableModel
     /**
      * @return ArgumentModel[]
      */
-    public function getArguments()
+    public function getArguments(): array
     {
         return $this->arguments;
     }
@@ -53,7 +53,7 @@ abstract class BaseMethodModel extends RenderableModel
      *
      * @return $this
      */
-    public function addArgument(ArgumentModel $argument)
+    public function addArgument(ArgumentModel $argument): static
     {
         $this->arguments[] = $argument;
 
@@ -63,7 +63,7 @@ abstract class BaseMethodModel extends RenderableModel
     /**
      * @return string
      */
-    protected function renderArguments()
+    protected function renderArguments(): string
     {
         $result = '';
         if ($this->arguments) {

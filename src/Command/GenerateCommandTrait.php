@@ -3,6 +3,7 @@
 namespace Ray\EloquentModelGenerator\Command;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 use Ray\EloquentModelGenerator\Config\Config;
 use Ray\EloquentModelGenerator\Exception\GeneratorException;
 use Ray\EloquentModelGenerator\Model\EloquentModel;
@@ -36,9 +37,9 @@ trait GenerateCommandTrait
     {
         $path = $this->option('output-path');
         if ($path === null) {
-            $path = app()->path('Models');
+            $path = App::path('Models');
         } elseif (!str_starts_with($path, '/')) {
-            $path = app()->path($path);
+            $path = App::path($path);
         }
 
         if (!is_dir($path)) {

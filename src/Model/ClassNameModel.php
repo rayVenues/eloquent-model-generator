@@ -19,24 +19,24 @@ class ClassNameModel extends RenderableModel
     /**
      * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * @var string
      */
-    protected $extends;
+    protected string $extends = '';
 
     /**
      * @var array
      */
-    protected $implements = [];
+    protected array $implements = [];
 
     /**
      * PHPClassName constructor.
      * @param string $name
      * @param string|null $extends
      */
-    public function __construct($name, $extends = null)
+    public function __construct(string $name, string $extends = null)
     {
         $this->setName($name)
             ->setExtends($extends);
@@ -45,7 +45,7 @@ class ClassNameModel extends RenderableModel
     /**
      * {@inheritDoc}
      */
-    public function toLines()
+    public function toLines(): string|array
     {
         $lines = [];
 
@@ -58,9 +58,7 @@ class ClassNameModel extends RenderableModel
         }
         $name .= 'class ' . $this->name;
 
-        if ($this->extends !== null) {
-            $name .= sprintf(' extends %s', $this->extends);
-        }
+        $name .= sprintf(' extends %s', $this->extends);
         if (count($this->implements) > 0) {
             $name .= sprintf(' implements %s', implode(', ', $this->implements));
         }
@@ -74,7 +72,7 @@ class ClassNameModel extends RenderableModel
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -84,7 +82,7 @@ class ClassNameModel extends RenderableModel
      *
      * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): static
     {
         $this->name = $name;
 
@@ -94,7 +92,7 @@ class ClassNameModel extends RenderableModel
     /**
      * @return string
      */
-    public function getExtends()
+    public function getExtends(): string
     {
         return $this->extends;
     }
@@ -104,7 +102,7 @@ class ClassNameModel extends RenderableModel
      *
      * @return $this
      */
-    public function setExtends($extends)
+    public function setExtends(string $extends): static
     {
         $this->extends = $extends;
 
@@ -114,7 +112,7 @@ class ClassNameModel extends RenderableModel
     /**
      * @return array
      */
-    public function getImplements()
+    public function getImplements(): array
     {
         return $this->implements;
     }
@@ -124,7 +122,7 @@ class ClassNameModel extends RenderableModel
      *
      * @return $this
      */
-    public function addImplements($implements)
+    public function addImplements(string $implements): static
     {
         $this->implements[] = $implements;
 
@@ -133,11 +131,12 @@ class ClassNameModel extends RenderableModel
 
     /**
      * {@inheritDoc}
+     * @throws ValidationException
      */
-    protected function validate()
+    protected function validate(): bool
     {
         if ($this->final && $this->abstract) {
-            throw new ValidationException('Entity cannot be final and abstract at the same time');
+            throw new ValidationException('Entity cannot be final and abstract at the same time.');
         }
 
         return parent::validate();

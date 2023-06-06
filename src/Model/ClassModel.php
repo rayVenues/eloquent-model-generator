@@ -13,46 +13,25 @@ use Ray\EloquentModelGenerator\RenderableModel;
 class ClassModel extends RenderableModel
 {
     use DocBlockTrait;
-
-    /**
-     * @var ClassNameModel
-     */
-    protected $name;
-
-    /**
-     * @var NamespaceModel
-     */
-    protected $namespace;
-
-    /**
-     * @var UseClassModel[]
-     */
-    protected $uses = [];
-
-    /**
-     * @var UseTraitModel[]
-     */
-    protected $traits = [];
-
-    /**
-     * @var ConstantModel[]
-     */
-    protected $constants = [];
-
-    /**
-     * @var BasePropertyModel[]
-     */
-    protected $properties = [];
-
-    /**
-     * @var BaseMethodModel[]
-     */
-    protected $methods = [];
+    protected DocBlockModel   $docBlock;
+    public function __construct(
+        protected ?ClassNameModel $name = null,
+        protected ?NamespaceModel $namespace = null,
+        protected ?array          $uses = null,
+        protected array           $traits = [],
+        protected array           $constants = [],
+        protected array           $properties = [],
+        protected array           $methods = [],
+        )
+    {
+        $this->docBlock = new DocBlockModel();
+    }
 
     /**
      * {@inheritDoc}
+     * @throws GeneratorException
      */
-    public function toLines()
+    public function toLines(): string|array
     {
         $lines = [];
         $lines[] = $this->ln('<?php');
@@ -63,9 +42,7 @@ class ClassModel extends RenderableModel
             $lines[] = $this->renderArrayLn($this->uses);
         }
         $this->prepareDocBlock();
-        if ($this->docBlock !== null) {
-            $lines[] = $this->docBlock->render();
-        }
+        $lines[] = $this->docBlock->render();
         $lines[] = $this->name->render();
         if (count($this->traits) > 0) {
             $lines[] = $this->renderArrayLn($this->traits, 4);
@@ -87,7 +64,7 @@ class ClassModel extends RenderableModel
     /**
      * @return ClassNameModel
      */
-    public function getName()
+    public function getName(): ClassNameModel
     {
         return $this->name;
     }
@@ -97,7 +74,7 @@ class ClassModel extends RenderableModel
      *
      * @return $this
      */
-    public function setName(ClassNameModel $name)
+    public function setName(ClassNameModel $name): static
     {
         $this->name = $name;
 
@@ -107,7 +84,7 @@ class ClassModel extends RenderableModel
     /**
      * @return NamespaceModel
      */
-    public function getNamespace()
+    public function getNamespace(): NamespaceModel
     {
         return $this->namespace;
     }
@@ -117,7 +94,7 @@ class ClassModel extends RenderableModel
      *
      * @return $this
      */
-    public function setNamespace(NamespaceModel $namespace)
+    public function setNamespace(NamespaceModel $namespace): static
     {
         $this->namespace = $namespace;
 
@@ -125,9 +102,9 @@ class ClassModel extends RenderableModel
     }
 
     /**
-     * @return UseClassModel[]
+     * @return UseClassModel|array
      */
-    public function getUses()
+    public function getUses(): ?UseClassModel
     {
         return $this->uses;
     }
@@ -137,7 +114,7 @@ class ClassModel extends RenderableModel
      *
      * @return $this
      */
-    public function addUses(UseClassModel $use)
+    public function addUses(UseClassModel $use): static
     {
         $this->uses[] = $use;
 
@@ -147,17 +124,17 @@ class ClassModel extends RenderableModel
     /**
      * @return UseTraitModel[]
      */
-    public function getTraits()
+    public function getTraits(): array
     {
         return $this->traits;
     }
 
     /**
-     * @param UseTraitModel
+     * @param UseTraitModel $trait
      *
      * @return $this
      */
-    public function addTrait(UseTraitModel $trait)
+    public function addTrait(UseTraitModel $trait): static
     {
         $this->traits[] = $trait;
 
@@ -167,7 +144,7 @@ class ClassModel extends RenderableModel
     /**
      * @return ConstantModel[]
      */
-    public function getConstants()
+    public function getConstants(): array
     {
         return $this->constants;
     }
@@ -177,7 +154,7 @@ class ClassModel extends RenderableModel
      *
      * @return $this
      */
-    public function addConstant(ConstantModel $constant)
+    public function addConstant(ConstantModel $constant): static
     {
         $this->constants[] = $constant;
 
@@ -187,7 +164,7 @@ class ClassModel extends RenderableModel
     /**
      * @return BasePropertyModel[]
      */
-    public function getProperties()
+    public function getProperties(): array
     {
         return $this->properties;
     }
@@ -197,7 +174,7 @@ class ClassModel extends RenderableModel
      *
      * @return $this
      */
-    public function addProperty(BasePropertyModel $property)
+    public function addProperty(BasePropertyModel $property): static
     {
         $this->properties[] = $property;
 
@@ -207,17 +184,17 @@ class ClassModel extends RenderableModel
     /**
      * @return BaseMethodModel[]
      */
-    public function getMethods()
+    public function getMethods(): array
     {
         return $this->methods;
     }
 
     /**
-     * @param BaseMethodModel
+     * @param BaseMethodModel $method
      *
      * @return $this
      */
-    public function addMethod(BaseMethodModel $method)
+    public function addMethod(BaseMethodModel $method): static
     {
         $this->methods[] = $method;
 
@@ -227,7 +204,7 @@ class ClassModel extends RenderableModel
     /**
      * Convert virtual properties and methods to DocBlock content
      */
-    protected function prepareDocBlock()
+    protected function prepareDocBlock(): void
     {
         $content = [];
 
@@ -244,18 +221,15 @@ class ClassModel extends RenderableModel
         }
 
         if ($content) {
-            if ($this->docBlock === null) {
-                $this->docBlock = new DocBlockModel();
-            }
-
             $this->docBlock->addContent($content);
         }
     }
 
     /**
      * @param array $lines
+     * @throws GeneratorException
      */
-    protected function processProperties(&$lines)
+    protected function processProperties(array &$lines): void
     {
         $properties = array_filter($this->properties, function ($property) {
             return !$property instanceof VirtualPropertyModel;
@@ -269,7 +243,7 @@ class ClassModel extends RenderableModel
      * @param array $lines
      * @throws GeneratorException
      */
-    protected function processMethods(&$lines)
+    protected function processMethods(array &$lines): void
     {
         $methods = array_filter($this->methods, function ($method) {
             return !$method instanceof VirtualMethodModel;

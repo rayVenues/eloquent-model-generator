@@ -8,15 +8,20 @@ namespace Ray\EloquentModelGenerator\Model\Traits;
  */
 trait FinalModifierTrait
 {
+    public function __construct()
+    {
+        $this->final = false;
+    }
+
     /**
      * @var boolean
      */
-    protected $final;
+    protected bool $final = false;
 
     /**
      * @return boolean
      */
-    public function isFinal()
+    public function isFinal(): bool
     {
         return $this->final;
     }
@@ -26,7 +31,7 @@ trait FinalModifierTrait
      *
      * @return $this
      */
-    public function setFinal($final = true)
+    public function setFinal(bool $final = true): static
     {
         $this->final = boolval($final);
 

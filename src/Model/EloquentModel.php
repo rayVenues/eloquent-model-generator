@@ -7,12 +7,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany as EloquentBelongsToMan
 use Illuminate\Database\Eloquent\Relations\HasMany as EloquentHasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne as EloquentHasOne;
 use Illuminate\Support\Str;
-use Ray\EloquentModelGenerator\Model\ClassModel;
-use Ray\EloquentModelGenerator\Model\DocBlockModel;
-use Ray\EloquentModelGenerator\Model\MethodModel;
-use Ray\EloquentModelGenerator\Model\VirtualPropertyModel;
 use Ray\EloquentModelGenerator\Exception\GeneratorException;
 use Ray\EloquentModelGenerator\Helper\EmgHelper;
+use ReflectionObject;
 
 class EloquentModel extends ClassModel
 {
@@ -30,6 +27,9 @@ class EloquentModel extends ClassModel
         return $this->tableName;
     }
 
+    /**
+     * @throws GeneratorException
+     */
     public function addReturnType(Relation $relation): string
     {
         if ($relation instanceof HasOne) {
@@ -51,6 +51,9 @@ class EloquentModel extends ClassModel
         return $docBlock;
     }
 
+    /**
+     * @throws GeneratorException
+     */
     public function addRelation(Relation $relation): void
     {
         $relationClass = EmgHelper::getClassNameByTableName($relation->getTableName());
@@ -89,7 +92,7 @@ class EloquentModel extends ClassModel
 
     protected function createRelationMethodBody(Relation $relation): string
     {
-        $reflectionObject = new \ReflectionObject($relation);
+        $reflectionObject = new ReflectionObject($relation);
         $name = Str::camel($reflectionObject->getShortName());
 
         $arguments = [
