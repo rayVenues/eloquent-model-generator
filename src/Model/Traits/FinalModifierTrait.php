@@ -33,7 +33,7 @@ trait FinalModifierTrait
      */
     public function setFinal(bool $final = true): static
     {
-        $this->final = boolval($final);
+        $this->final = $final;
 
         return $this;
     }

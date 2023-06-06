@@ -22,6 +22,9 @@ trait GenerateCommandTrait
             ->setConnection($this->option('connection'));
     }
 
+    /**
+     * @throws GeneratorException
+     */
     protected function saveModel(EloquentModel $model): void
     {
         $content = $model->render();
@@ -33,6 +36,9 @@ trait GenerateCommandTrait
         file_put_contents($outputFilepath, $content);
     }
 
+    /**
+     * @throws GeneratorException
+     */
     protected function resolveOutputPath(): string
     {
         $path = $this->option('output-path');
