@@ -16,6 +16,7 @@ trait GenerateCommandTrait
         return (new Config())
             ->setTableName($this->option('table-name'))
             ->setNamespace($this->option('namespace'))
+            ->setOutputPath($this->option('output-path'))
             ->setBaseClassName($this->option('base-class-name'))
             ->setNoTimestamps($this->option('no-timestamps'))
             ->setDateFormat($this->option('date-format'))

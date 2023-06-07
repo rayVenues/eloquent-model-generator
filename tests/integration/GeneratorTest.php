@@ -2,6 +2,7 @@
 
 namespace Ray\Tests\Integration;
 
+use Exception;
 use Illuminate\Database\Connectors\SQLiteConnector;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\Model;
@@ -120,6 +121,22 @@ class GeneratorTest extends TestCase
         $model = $this->generator->generateModel($config);
         $a = $model->render();
         $b = file_get_contents(__DIR__ . '/resources/User-with-custom-classname.php.generated');
+        $this->assertEquals($a, $b);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testGeneratedModelOutputPathWithoutNamespaceIsValid(): void
+    {
+        $config = (new Config())
+            ->setClassName('User')
+            ->setOutputPath('TempModels')
+            ->setBaseClassName('Base\ClassName');
+
+        $model = $this->generator->generateModel($config);
+        $a = $model->render();
+        $b = file_get_contents(__DIR__ . '/resources/User-with-valid-out-path-without-namespace.php.generated');
         $this->assertEquals($a, $b);
     }
 }

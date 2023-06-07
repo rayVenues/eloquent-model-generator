@@ -14,7 +14,7 @@ class CustomPropertyProcessor implements ProcessorInterface
         if ($config->getNoTimestamps()) {
             $pNoTimestamps = new PropertyModel('timestamps', 'public', false);
             $pNoTimestamps->setDocBlock(
-                new DocBlockModel('Indicates if the model should be timestamped.', '@var bool')
+                docBlock: new DocBlockModel('Indicates if the model should be timestamped.', '@var bool')
             );
             $model->addProperty($pNoTimestamps);
         }
@@ -22,7 +22,7 @@ class CustomPropertyProcessor implements ProcessorInterface
         if ($config->getDateFormat() !== null) {
             $pDateFormat = new PropertyModel('dateFormat', 'protected', $config->getDateFormat());
             $pDateFormat->setDocBlock(
-                new DocBlockModel('The storage format of the model\'s date columns.', '@var string')
+                docBlock: new DocBlockModel('The storage format of the model\'s date columns.', '@var string')
             );
             $model->addProperty($pDateFormat);
         }
@@ -30,7 +30,7 @@ class CustomPropertyProcessor implements ProcessorInterface
         if ($config->getConnection()) {
             $pConnection = new PropertyModel('connection', 'protected', $config->getConnection());
             $pConnection->setDocBlock(
-                new DocBlockModel('The connection name for the model.', '@var string')
+                docBlock: new DocBlockModel('The connection name for the model.', '@var string')
             );
             $model->addProperty($pConnection);
         }

@@ -2,6 +2,9 @@
 
 namespace Ray\EloquentModelGenerator\Config;
 
+use Exception;
+use Ray\EloquentModelGenerator\Helper\NamespaceValidator;
+
 class Config
 {
     private ?bool $noBackup = false;
@@ -12,6 +15,7 @@ class Config
     private ?string $dateFormat = null;
     private ?string $namespace = null;
     private ?string $tableName = null;
+    private ?string $path = null;
 
     public function getClassName(): ?string
     {
@@ -45,6 +49,24 @@ class Config
     public function setNamespace(?string $namespace): self
     {
         $this->namespace = $namespace;
+
+        return $this;
+    }
+
+    public function getOutputPath(): ?string
+    {
+        return $this->path;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function setOutputPath(?string $path): self
+    {
+        if ($path) {
+            $this->namespace = NamespaceValidator::pathToModelNamespace($path);
+        }
+        $this->path = $path;
 
         return $this;
     }
