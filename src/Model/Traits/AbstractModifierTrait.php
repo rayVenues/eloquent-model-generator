@@ -16,14 +16,12 @@ trait AbstractModifierTrait
     /**
      * @return boolean
      */
-    public function isAbstract(): bool
+    public function getAbstract(): bool
     {
         return $this->abstract;
     }
 
     /**
-     * @param boolean $abstract
-     *
      * @return $this
      */
     public function setAbstract(bool $abstract = true): static

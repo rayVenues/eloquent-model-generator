@@ -76,6 +76,7 @@ trait GenerateCommandTrait
             ['date-format', 'df', InputOption::VALUE_OPTIONAL, 'dateFormat property', config('eloquent_model_generator.date_format')],
             ['connection', 'cn', InputOption::VALUE_OPTIONAL, 'Connection property', config('eloquent_model_generator.connection')],
             ['no-backup', 'b', InputOption::VALUE_OPTIONAL, 'Backup existing model', config('eloquent_model_generator.no_backup', false)],
+            ['class-type', 'ct', InputOption::VALUE_NONE, 'Set Model Class type (abstract or final)', config('eloquent_model_generator.class_type', false)],
         ];
     }
 }

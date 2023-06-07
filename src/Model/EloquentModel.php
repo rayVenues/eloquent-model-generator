@@ -9,10 +9,13 @@ use Illuminate\Database\Eloquent\Relations\HasOne as EloquentHasOne;
 use Illuminate\Support\Str;
 use Ray\EloquentModelGenerator\Exception\GeneratorException;
 use Ray\EloquentModelGenerator\Helper\EmgHelper;
+use Ray\EloquentModelGenerator\Model\Traits\ClassTypeModifierTrait;
 use ReflectionObject;
 
 class EloquentModel extends ClassModel
 {
+    use ClassTypeModifierTrait;
+
     protected string $tableName;
 
     public function setTableName(string $tableName): self

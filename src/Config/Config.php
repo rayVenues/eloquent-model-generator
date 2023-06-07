@@ -4,9 +4,12 @@ namespace Ray\EloquentModelGenerator\Config;
 
 use Exception;
 use Ray\EloquentModelGenerator\Helper\NamespaceValidator;
+use Ray\EloquentModelGenerator\Model\Traits\ClassTypeModifierTrait;
 
 class Config
 {
+    use ClassTypeModifierTrait;
+
     private ?bool $noBackup = false;
     private ?bool $noTimestamps = false;
     private ?string $baseClassName = null;

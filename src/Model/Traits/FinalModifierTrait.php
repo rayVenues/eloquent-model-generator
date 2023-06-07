@@ -21,7 +21,7 @@ trait FinalModifierTrait
     /**
      * @return boolean
      */
-    public function isFinal(): bool
+    public function getFinal(): bool
     {
         return $this->final;
     }

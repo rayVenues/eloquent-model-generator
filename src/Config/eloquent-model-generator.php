@@ -11,4 +11,5 @@ return [
     'connection' => null,
     'no_backup' => null,
     'db_types' => null,
+    'class-type' => null,
 ];

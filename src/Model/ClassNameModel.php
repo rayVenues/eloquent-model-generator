@@ -4,6 +4,7 @@ namespace Ray\EloquentModelGenerator\Model;
 
 use Ray\EloquentModelGenerator\Exception\ValidationException;
 use Ray\EloquentModelGenerator\Model\Traits\AbstractModifierTrait;
+use Ray\EloquentModelGenerator\Model\Traits\ClassTypeModifierTrait;
 use Ray\EloquentModelGenerator\Model\Traits\FinalModifierTrait;
 use Ray\EloquentModelGenerator\RenderableModel;
 
@@ -13,8 +14,7 @@ use Ray\EloquentModelGenerator\RenderableModel;
  */
 class ClassNameModel extends RenderableModel
 {
-    use AbstractModifierTrait;
-    use FinalModifierTrait;
+    use ClassTypeModifierTrait;
 
     /**
      * @var string
@@ -36,10 +36,11 @@ class ClassNameModel extends RenderableModel
      * @param string $name
      * @param string|null $extends
      */
-    public function __construct(string $name, string $extends = null)
+    public function __construct(string $name, string $extends = null, string $classType = null)
     {
         $this->setName($name)
-            ->setExtends($extends);
+            ->setExtends($extends)
+            ->setClassType($classType);
     }
 
     /**
@@ -49,14 +50,7 @@ class ClassNameModel extends RenderableModel
     {
         $lines = [];
 
-        $name = '';
-        if ($this->final) {
-            $name .= 'final ';
-        }
-        if ($this->abstract) {
-            $name .= 'abstract ';
-        }
-        $name .= 'class ' . $this->name;
+        $name = trim($this->getClassType() . ' class ' . $this->name);
 
         $name .= sprintf(' extends %s', $this->extends);
         if (count($this->implements) > 0) {
@@ -131,14 +125,9 @@ class ClassNameModel extends RenderableModel
 
     /**
      * {@inheritDoc}
-     * @throws ValidationException
      */
     protected function validate(): bool
     {
-        if ($this->final && $this->abstract) {
-            throw new ValidationException('Entity cannot be final and abstract at the same time.');
-        }
-
         return parent::validate();
     }
 }

@@ -27,6 +27,7 @@ class TableNameProcessor implements ProcessorInterface
         $className = $config->getClassName();
         $baseClassName = $config->getBaseClassName();
         $tableName = $config->getTableName() ?: EmgHelper::getTableNameByClassName($className);
+        $classType = $config->getClassType();
 
         $schemaManager = $this->databaseManager->connection($config->getConnection())->getDoctrineSchemaManager();
         $prefixedTableName = Prefix::add($tableName);
@@ -35,7 +36,7 @@ class TableNameProcessor implements ProcessorInterface
         }
 
         $model
-            ->setName(new ClassNameModel($className, EmgHelper::getShortClassName($baseClassName)))
+            ->setName(new ClassNameModel($className, EmgHelper::getShortClassName($baseClassName), $classType))
             ->addUses(new UseClassModel(ltrim($baseClassName, '\\')))
             ->setTableName($tableName);
 

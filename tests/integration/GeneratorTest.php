@@ -60,20 +60,7 @@ class GeneratorTest extends TestCase
     /**
      * @dataProvider modelNameProvider
      */
-    public function testGeneratedModel(string $modelName): void
-    {
-        $config = (new Config())
-            ->setClassName($modelName)
-            ->setNamespace('App\Models')
-            ->setBaseClassName(Model::class);
-
-        $model = $this->generator->generateModel($config);
-        $a = $model->render();
-        $b = file_get_contents(__DIR__ . '/resources/' . $modelName . '.php.generated');
-        $this->assertEquals($a, $b);
-    }
-
-    public function modelNameProvider(): array
+    public static function modelNameProvider(): array
     {
         return [
             [
@@ -92,6 +79,33 @@ class GeneratorTest extends TestCase
                 'modelName' => 'Post',
             ],
         ];
+    }
+
+    public function testGeneratedAbstractModel(): void
+    {
+        $config = (new Config())
+            ->setClassName('User')
+            ->setNamespace('App\Models')
+            ->setClassType('abstract')
+            ->setBaseClassName(Model::class);
+
+        $model = $this->generator->generateModel($config);
+        $a = $model->render();
+        $b = file_get_contents(__DIR__ . '/resources/Abstract' . 'User' . '.php.generated');
+        $this->assertEquals($a, $b);
+    }
+
+    public function testGeneratedModel(): void
+    {
+        $config = (new Config())
+            ->setClassName('User')
+            ->setNamespace('App\Models')
+            ->setBaseClassName(Model::class);
+
+        $model = $this->generator->generateModel($config);
+        $a = $model->render();
+        $b = file_get_contents(__DIR__ . '/resources/' . 'User' . '.php.generated');
+        $this->assertEquals($a, $b);
     }
 
     public function testGeneratedModelWithCustomProperties(): void
@@ -139,4 +153,5 @@ class GeneratorTest extends TestCase
         $b = file_get_contents(__DIR__ . '/resources/User-with-valid-out-path-without-namespace.php.generated');
         $this->assertEquals($a, $b);
     }
+
 }
