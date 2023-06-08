@@ -1,6 +1,5 @@
 <?php
 
-use Exception;
 use Illuminate\Database\Connectors\SQLiteConnector;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\Model;
