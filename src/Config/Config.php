@@ -92,7 +92,7 @@ class Config
         return $this->noTimestamps;
     }
 
-    public function setNoTimestamps(bool|null $flag = null): self
+    public function setNoTimestamps(bool | null $flag = null): self
     {
         $this->noTimestamps = $flag ?? true;
 
@@ -138,6 +138,8 @@ class Config
     public function setImplements(string $interface): self
     {
         $this->implements = $interface;
+
+        return $this;
     }
 
     public function getImplements(): string

@@ -4,12 +4,13 @@ namespace Ray\EloquentModelGenerator\Helper;
 
 use Exception;
 
-class NamespaceValidator {
+class NamespaceValidator
+{
 
     /**
      * @throws Exception
      */
-    static function pathToModelNamespace($path):string|bool
+    static function pathToModelNamespace($path): string | bool
     {
         $path = trim($path);
 
@@ -23,18 +24,12 @@ class NamespaceValidator {
 
         $namespace = implode('\\', $pathSegments);
 
-        if (function_exists('base_path')) {
-            $laravelBasePath = base_path();
-            $path = base_path($path);
-        } else {
-            $laravelBasePath = getcwd();
-            // If the path is not absolute, make it absolute
-            if (! str_starts_with($path, '/')) {
-                $path = getcwd() . '/app/' . $path;
-            }
+        $appBasePath = getcwd();
+        if (! str_starts_with($path, '/')) {
+            $path = getcwd() . '/app/' . $path;
         }
 
-        if (! str_contains(strtolower($path), realpath(strtolower($laravelBasePath)) . '/')) {
+        if (! str_contains(strtolower($path), realpath(strtolower($appBasePath)) . '/')) {
             throw new Exception('The path "' . $path . '" is not within your app\'s  directory structure.');
         }
 
