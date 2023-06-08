@@ -14,6 +14,7 @@ use Ray\EloquentModelGenerator\Processor\NamespaceProcessor;
 use Ray\EloquentModelGenerator\Processor\RelationProcessor;
 use Ray\EloquentModelGenerator\Processor\TableNameProcessor;
 use Ray\EloquentModelGenerator\TypeRegistry;
+
 beforeAll(static function () {
     $connector = new SQLiteConnector();
     $pdo = $connector->connect([

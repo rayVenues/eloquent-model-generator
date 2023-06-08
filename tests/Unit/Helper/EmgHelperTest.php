@@ -5,7 +5,6 @@ use Doctrine\DBAL\Schema\Table;
 use Illuminate\Database\Eloquent\Model;
 use Ray\EloquentModelGenerator\Helper\EmgHelper;
 
-
 test('get short class name', function (string $fqcn, string $expected) {
     expect(EmgHelper::getShortClassName($fqcn))->toEqual($expected);
 })->with('fqcnProvider');
