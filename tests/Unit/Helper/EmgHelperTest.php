@@ -7,23 +7,23 @@ use Ray\EloquentModelGenerator\Helper\EmgHelper;
 
 
 test('get short class name', function (string $fqcn, string $expected) {
-    $this->assertEquals($expected, EmgHelper::getShortClassName($fqcn));
+    expect(EmgHelper::getShortClassName($fqcn))->toEqual($expected);
 })->with('fqcnProvider');
 
 test('get table name by class name', function (string $className, string $expected) {
-    $this->assertEquals($expected, EmgHelper::getTableNameByClassName($className));
+    expect(EmgHelper::getTableNameByClassName($className))->toEqual($expected);
 })->with('classNameProvider');
 
 test('get class name by table name', function (string $tableName, string $expected) {
-    $this->assertEquals($expected, EmgHelper::getClassNameByTableName($tableName));
+    expect(EmgHelper::getClassNameByTableName($tableName))->toEqual($expected);
 })->with('tableNameToClassNameProvider');
 
 test('get default foreign column name', function (string $tableName, string $expected) {
-    $this->assertEquals($expected, EmgHelper::getDefaultForeignColumnName($tableName));
+    expect(EmgHelper::getDefaultForeignColumnName($tableName))->toEqual($expected);
 })->with('tableNameToForeignColumnNameProvider');
 
 test('get default join table name', function (string $tableNameOne, string $tableNameTwo, string $expected) {
-    $this->assertEquals($expected, EmgHelper::getDefaultJoinTableName($tableNameOne, $tableNameTwo));
+    expect(EmgHelper::getDefaultJoinTableName($tableNameOne, $tableNameTwo))->toEqual($expected);
 })->with('tableNamesProvider');
 
 test('is column unique', function () {
@@ -43,7 +43,7 @@ test('is column unique', function () {
         ->method('getIndexes')
         ->willReturn($indexMocks);
 
-    $this->assertTrue(EmgHelper::isColumnUnique($tableMock, 'column_0'));
+    expect(EmgHelper::isColumnUnique($tableMock, 'column_0'))->toBeTrue();
 });
 
 test('is column unique two index columns', function () {
@@ -62,7 +62,7 @@ test('is column unique two index columns', function () {
         ->method('getIndexes')
         ->willReturn($indexMocks);
 
-    $this->assertFalse(EmgHelper::isColumnUnique($tableMock, 'column_0'));
+    expect(EmgHelper::isColumnUnique($tableMock, 'column_0'))->toBeFalse();
 });
 
 test('is column unique index not unique', function () {
@@ -82,7 +82,7 @@ test('is column unique index not unique', function () {
         ->method('getIndexes')
         ->willReturn($indexMocks);
 
-    $this->assertFalse(EmgHelper::isColumnUnique($tableMock, 'column_0'));
+    expect(EmgHelper::isColumnUnique($tableMock, 'column_0'))->toBeFalse();
 });
 
 // Datasets

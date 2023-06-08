@@ -57,7 +57,7 @@ test('generated abstract model', function () {
     $model = $this->generator->generateModel($config);
     $a = $model->render();
     $b = file_get_contents(__DIR__ . '/resources/Abstract' . 'User' . '.php.generated');
-    $this->assertEquals($a, $b);
+    expect($b)->toEqual($a);
 });
 
 test('generated model', function () {
@@ -69,7 +69,7 @@ test('generated model', function () {
     $model = $this->generator->generateModel($config);
     $a = $model->render();
     $b = file_get_contents(__DIR__ . '/resources/' . 'User' . '.php.generated');
-    $this->assertEquals($a, $b);
+    expect($b)->toEqual($a);
 });
 
 test('generated model with custom properties', function () {
@@ -83,7 +83,7 @@ test('generated model with custom properties', function () {
     $model = $this->generator->generateModel($config);
     $a = $model->render();
     $b = file_get_contents(__DIR__ . '/resources/User-with-params.php.generated');
-    $this->assertEquals($a, $b);
+    expect($b)->toEqual($a);
 });
 
 test('generated model custom class name', function () {
@@ -97,7 +97,7 @@ test('generated model custom class name', function () {
     $model = $this->generator->generateModel($config);
     $a = $model->render();
     $b = file_get_contents(__DIR__ . '/resources/User-with-custom-classname.php.generated');
-    $this->assertEquals($a, $b);
+    expect($b)->toEqual($a);
 });
 
 /**
@@ -112,7 +112,7 @@ test('generated model output path without namespace is valid', function () {
     $model = $this->generator->generateModel($config);
     $a = $model->render();
     $b = file_get_contents(__DIR__ . '/resources/User-with-valid-out-path-without-namespace.php.generated');
-    $this->assertEquals($a, $b);
+    expect($b)->toEqual($a);
 });
 
 // Helpers
