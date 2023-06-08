@@ -10,7 +10,9 @@ use Ray\EloquentModelGenerator\Model\UseTraitModel;
 
 class SoftDeleteTraitProcessor implements ProcessorInterface
 {
-    public function __construct(private readonly DatabaseManager $databaseManager) {}
+    public function __construct(private readonly DatabaseManager $databaseManager)
+    {
+    }
 
     /**
      * @throws Exception
@@ -18,10 +20,10 @@ class SoftDeleteTraitProcessor implements ProcessorInterface
     public function process(EloquentModel $model, Config $config): void
     {
         $schemaManager = $this->databaseManager->connection($config->getConnection())->getDoctrineSchemaManager();
-        $prefix        = $this->databaseManager->connection($config->getConnection())->getTablePrefix();
-        $tableDetails  = $schemaManager->introspectTable($prefix . $model->getTableName());
+        $prefix = $this->databaseManager->connection($config->getConnection())->getTablePrefix();
+        $tableDetails = $schemaManager->introspectTable($prefix . $model->getTableName());
 
-        if (!isset($tableDetails->getColumns()['deleted_at'])) {
+        if (! isset($tableDetails->getColumns()['deleted_at'])) {
             return;
         }
 

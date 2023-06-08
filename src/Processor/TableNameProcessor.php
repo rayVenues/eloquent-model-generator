@@ -16,7 +16,9 @@ use Ray\EloquentModelGenerator\Model\EloquentModel;
 
 class TableNameProcessor implements ProcessorInterface
 {
-    public function __construct(private readonly DatabaseManager $databaseManager) {}
+    public function __construct(private readonly DatabaseManager $databaseManager)
+    {
+    }
 
     /**
      * @throws GeneratorException
@@ -31,7 +33,7 @@ class TableNameProcessor implements ProcessorInterface
 
         $schemaManager = $this->databaseManager->connection($config->getConnection())->getDoctrineSchemaManager();
         $prefixedTableName = Prefix::add($tableName);
-        if (!$schemaManager->tablesExist($prefixedTableName)) {
+        if (! $schemaManager->tablesExist($prefixedTableName)) {
             throw new GeneratorException(sprintf('Table %s does not exist', $prefixedTableName));
         }
 

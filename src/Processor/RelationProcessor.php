@@ -16,7 +16,9 @@ use Ray\EloquentModelGenerator\Model\HasOne;
 
 class RelationProcessor implements ProcessorInterface
 {
-    public function __construct(private readonly DatabaseManager $databaseManager) {}
+    public function __construct(private readonly DatabaseManager $databaseManager)
+    {
+    }
 
     /**
      * @throws GeneratorException

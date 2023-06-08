@@ -14,7 +14,9 @@ use Ray\EloquentModelGenerator\TypeRegistry;
 
 class FieldProcessor implements ProcessorInterface
 {
-    public function __construct(private readonly DatabaseManager $databaseManager, private readonly TypeRegistry $typeRegistry) {}
+    public function __construct(private readonly DatabaseManager $databaseManager, private readonly TypeRegistry $typeRegistry)
+    {
+    }
 
     /**
      * @throws Exception
@@ -33,7 +35,7 @@ class FieldProcessor implements ProcessorInterface
                 $this->typeRegistry->resolveType($column->getType()->getName())
             ));
 
-            if (!in_array($column->getName(), $primaryColumnNames)) {
+            if (! in_array($column->getName(), $primaryColumnNames)) {
                 $columnNames[] = $column->getName();
             }
         }

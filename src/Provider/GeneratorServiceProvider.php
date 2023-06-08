@@ -9,14 +9,14 @@ use Ray\EloquentModelGenerator\Command\GenerateModelCommand;
 use Ray\EloquentModelGenerator\Command\GenerateModelsCommand;
 use Ray\EloquentModelGenerator\EventListener\GenerateCommandEventListener;
 use Ray\EloquentModelGenerator\Generator;
-use Ray\EloquentModelGenerator\Processor\CustomPrimaryKeyProcessor;
-use Ray\EloquentModelGenerator\Processor\CustomPropertyProcessor;
-use Ray\EloquentModelGenerator\Processor\FieldProcessor;
-use Ray\EloquentModelGenerator\Processor\NamespaceProcessor;
-use Ray\EloquentModelGenerator\Processor\RelationProcessor;
-use Ray\EloquentModelGenerator\Processor\SoftDeleteTraitProcessor;
-use Ray\EloquentModelGenerator\Processor\TableNameProcessor;
-use Ray\EloquentModelGenerator\Processor\TableWithoutTimestampsProcessor;
+use Ray\EloquentModelGenerator\Processor\_CustomPrimaryKeyProcessor;
+use Ray\EloquentModelGenerator\Processor\_CustomPropertyProcessor;
+use Ray\EloquentModelGenerator\Processor\_FieldProcessor;
+use Ray\EloquentModelGenerator\Processor\_NamespaceProcessor;
+use Ray\EloquentModelGenerator\Processor\_RelationProcessor;
+use Ray\EloquentModelGenerator\Processor\_SoftDeleteTraitProcessor;
+use Ray\EloquentModelGenerator\Processor\_TableNameProcessor;
+use Ray\EloquentModelGenerator\Processor\_TableWithoutTimestampsProcessor;
 use Ray\EloquentModelGenerator\TypeRegistry;
 
 class GeneratorServiceProvider extends ServiceProvider
@@ -34,14 +34,14 @@ class GeneratorServiceProvider extends ServiceProvider
         $this->app->singleton(GenerateCommandEventListener::class);
 
         $this->app->tag([
-            FieldProcessor::class,
-            NamespaceProcessor::class,
-            RelationProcessor::class,
-            CustomPropertyProcessor::class,
-            TableNameProcessor::class,
-            CustomPrimaryKeyProcessor::class,
-            SoftDeleteTraitProcessor::class,
-            TableWithoutTimestampsProcessor::class,
+            _FieldProcessor::class,
+            _NamespaceProcessor::class,
+            _RelationProcessor::class,
+            _CustomPropertyProcessor::class,
+            _TableNameProcessor::class,
+            _CustomPrimaryKeyProcessor::class,
+            _SoftDeleteTraitProcessor::class,
+            _TableWithoutTimestampsProcessor::class,
         ], self::PROCESSOR_TAG);
 
         $this->app->bind(Generator::class, function ($app) {

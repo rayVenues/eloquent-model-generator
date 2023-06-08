@@ -14,7 +14,9 @@ use Ray\EloquentModelGenerator\TypeRegistry;
 
 class CustomPrimaryKeyProcessor implements ProcessorInterface
 {
-    public function __construct(private readonly DatabaseManager $databaseManager, private readonly TypeRegistry $typeRegistry) {}
+    public function __construct(private readonly DatabaseManager $databaseManager, private readonly TypeRegistry $typeRegistry)
+    {
+    }
 
     /**
      * @throws Exception
@@ -56,7 +58,7 @@ class CustomPrimaryKeyProcessor implements ProcessorInterface
             $model->addProperty($keyTypeProperty);
         }
 
-        if (!$column->getAutoincrement()) {
+        if (! $column->getAutoincrement()) {
             $autoincrementProperty = new PropertyModel('incrementing', 'public', false);
             $autoincrementProperty->setDocBlock(
                 new DocBlockModel('Indicates if the IDs are auto-incrementing.', '', '@var bool')

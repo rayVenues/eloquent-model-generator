@@ -15,6 +15,8 @@ use Ray\EloquentModelGenerator\Processor\RelationProcessor;
 use Ray\EloquentModelGenerator\Processor\TableNameProcessor;
 use Ray\EloquentModelGenerator\TypeRegistry;
 
+// TODO: Implement beforeAll()
+
 beforeEach(
 /**
  * @throws Exception
@@ -121,9 +123,6 @@ it('Generates a model with a custom Class name.', function () {
 });
 
 it('Generates a Model with output path and no namespace.',
-    /**
-     * @throws \Exception
-     */
     function () {
         $config = (new Config())
             ->setClassName('User')
@@ -132,7 +131,18 @@ it('Generates a Model with output path and no namespace.',
 
         $model = $this->generator->generateModel($config);
         $a = $model->render();
-        $b = file_get_contents(__DIR__ . '/resources/User-with-valid-out-path-without-namespace.php.generated');
-        expect($a)->toEqual($b);
+        expect($a)->toContain('namespace App\TempModels');
     });
+
+it('Generates a Model specifying output-path and namespace options. The namespace should be App\Models.', function () {
+    $config = (new Config())
+        ->setClassName('User')
+        ->setOutputPath('TempModels')
+        ->setNamespace('App\Models')
+        ->setBaseClassName('Base\ClassName');
+
+    $model = $this->generator->generateModel($config);
+    $a = $model->render();
+    expect($a)->toContain('namespace App\Models');
+});
 

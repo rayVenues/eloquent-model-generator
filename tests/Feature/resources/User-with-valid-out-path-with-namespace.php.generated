@@ -1,0 +1,55 @@
+<?php
+
+namespace App\TempModels;
+
+use Base\ClassName;
+
+/**
+ * @property integer $id
+ * @property integer $organization_id
+ * @property string $username
+ * @property integer $is_active
+ * @property Avatar $avatar
+ * @property Post[] $posts
+ * @property UserRole[] $userRoles
+ * @property Organization $organization
+ */
+class User extends ClassName
+{
+    /**
+     * @var array
+     */
+    protected $fillable = ['organization_id', 'username', 'is_active'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function avatar(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne('App\TempModels\Avatar', 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function posts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany('App\TempModels\Post', 'author_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function userRoles(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany('App\TempModels\UserRole');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function organization(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo('App\TempModels\Organization');
+    }
+}
