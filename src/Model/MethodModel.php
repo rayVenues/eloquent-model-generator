@@ -42,7 +42,7 @@ class MethodModel extends BaseMethodModel
     /**
      * {@inheritDoc}
      */
-    public function toLines(): string|array
+    public function toLines(): string | array
     {
         $lines = [];
         $lines = array_merge($lines, $this->docBlock->toLines());
@@ -66,7 +66,7 @@ class MethodModel extends BaseMethodModel
         }
 
         $lines[] = $function;
-        if (!$this->abstract) {
+        if (! $this->abstract) {
             $lines[] = '{';
             if ($this->body) {
                 $lines[] = sprintf('    %s', $this->body); // TODO: make body render-able

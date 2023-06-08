@@ -3,6 +3,7 @@
 namespace Ray\EloquentModelGenerator\Helper;
 
 use Exception;
+use Ray\EloquentModelGenerator\Exception\GeneratorException;
 
 class NamespaceValidator
 {
@@ -30,7 +31,7 @@ class NamespaceValidator
         }
 
         if (! str_contains(strtolower($path), realpath(strtolower($appBasePath)) . '/')) {
-            throw new Exception('The path "' . $path . '" is not within your app\'s  directory structure.');
+            throw new GeneratorException('The path "' . $path . '" is not within your app\'s  directory structure.');
         }
 
         if (! str_starts_with($namespace, 'App/')) {

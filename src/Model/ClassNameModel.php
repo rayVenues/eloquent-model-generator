@@ -2,10 +2,8 @@
 
 namespace Ray\EloquentModelGenerator\Model;
 
-use Ray\EloquentModelGenerator\Exception\ValidationException;
-use Ray\EloquentModelGenerator\Model\Traits\AbstractModifierTrait;
+use Exception;
 use Ray\EloquentModelGenerator\Model\Traits\ClassTypeModifierTrait;
-use Ray\EloquentModelGenerator\Model\Traits\FinalModifierTrait;
 use Ray\EloquentModelGenerator\RenderableModel;
 
 /**
@@ -35,6 +33,8 @@ class ClassNameModel extends RenderableModel
      * PHPClassName constructor.
      * @param string $name
      * @param string|null $extends
+     * @param string|null $classType
+     * @throws Exception
      */
     public function __construct(string $name, string $extends = null, string $classType = null)
     {
@@ -46,7 +46,7 @@ class ClassNameModel extends RenderableModel
     /**
      * {@inheritDoc}
      */
-    public function toLines(): string|array
+    public function toLines(): string | array
     {
         $lines = [];
 

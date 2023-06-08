@@ -23,9 +23,13 @@ trait ClassTypeModifierTrait
 
     /**
      * @return $this
+     * @throws \Exception
      */
     public function setClassType(string $classType): static
     {
+        if (! in_array($classType, ['final', 'abstract', ''])) {
+            throw new \InvalidArgumentException('Class type must be either final or abstract');
+        }
         $this->classType = $classType;
 
         return $this;

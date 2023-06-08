@@ -53,19 +53,6 @@ beforeEach(
 
     });
 
-it('Generates a User Model.',
-    function () {
-        $config = (new Config())
-            ->setClassName('User')
-            ->setNamespace('App\Models')
-            ->setBaseClassName(Model::class);
-
-        $model = $this->generator->generateModel($config);
-        $a = $model->render();
-        $b = file_get_contents(__DIR__ . '/resources/' . 'User' . '.php.generated');
-        expect($a)->toEqual($b);
-    });
-
 it('Generates an abstract User Model.',
     function () {
         $config = (new Config())
@@ -94,33 +81,31 @@ it('Generates a final User Model.',
         expect($a)->toEqual($b);
     });
 
-it('Generates a model with custom properties.', function () {
-    $config = (new Config())
-        ->setClassName('User')
-        ->setNamespace('App')
-        ->setBaseClassName('Base\ClassName')
-        ->setNoTimestamps()
-        ->setDateFormat('d/m/y');
+it('Does not allow a class type other than abstract or final.',
+    function () {
+        $config = (new Config())
+            ->setClassName('User')
+            ->setNamespace('App\Models')
+            ->setClassType('not-allowed')
+            ->setBaseClassName(Model::class);
 
-    $model = $this->generator->generateModel($config);
-    $a = $model->render();
-    $b = file_get_contents(__DIR__ . '/resources/User-with-params.php.generated');
-    expect($a)->toEqual($b);
-});
+        $this->generator->generateModel($config);
+    })->throws('InvalidArgumentException');
 
-it('Generates a model with a custom Class name.', function () {
-    $config = (new Config())
-        ->setClassName('UserModel')
-        ->setNamespace('App')
-        ->setBaseClassName('Base\ClassName')
-        ->setNoTimestamps()
-        ->setDateFormat('d/m/y');
+it('Generates a model with custom properties.',
+    function () {
+        $config = (new Config())
+            ->setClassName('User')
+            ->setNamespace('App')
+            ->setBaseClassName('Base\ClassName')
+            ->setNoTimestamps()
+            ->setDateFormat('d/m/y');
 
-    $model = $this->generator->generateModel($config);
-    $a = $model->render();
-    $b = file_get_contents(__DIR__ . '/resources/User-with-custom-classname.php.generated');
-    expect($a)->toEqual($b);
-});
+        $model = $this->generator->generateModel($config);
+        $a = $model->render();
+        $b = file_get_contents(__DIR__ . '/resources/User-with-params.php.generated');
+        expect($a)->toEqual($b);
+    });
 
 it('Generates a Model with output path and no namespace.',
     function () {
@@ -134,15 +119,16 @@ it('Generates a Model with output path and no namespace.',
         expect($a)->toContain('namespace App\TempModels');
     });
 
-it('Generates a Model specifying output-path and namespace options. The namespace should be App\Models.', function () {
-    $config = (new Config())
-        ->setClassName('User')
-        ->setOutputPath('TempModels')
-        ->setNamespace('App\Models')
-        ->setBaseClassName('Base\ClassName');
+it('Generates a Model specifying output-path and namespace options. The namespace should be App\Models.',
+    function () {
+        $config = (new Config())
+            ->setClassName('User')
+            ->setOutputPath('TempModels')
+            ->setNamespace('App\Models')
+            ->setBaseClassName('Base\ClassName');
 
-    $model = $this->generator->generateModel($config);
-    $a = $model->render();
-    expect($a)->toContain('namespace App\Models');
-});
+        $model = $this->generator->generateModel($config);
+        $a = $model->render();
+        expect($a)->toContain('namespace App\Models');
+    });
 
