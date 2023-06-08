@@ -29,6 +29,7 @@ class GenerateModelCommand extends Command
     public function handle(): void
     {
         $config = $this->createConfig();
+        $config->setClassName($this->argument('class-name'));
         Prefix::setPrefix($this->databaseManager->connection($config->getConnection())->getTablePrefix());
 
         $model = $this->generator->generateModel($config);

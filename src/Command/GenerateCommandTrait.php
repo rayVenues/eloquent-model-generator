@@ -22,6 +22,7 @@ trait GenerateCommandTrait
             ->setNamespace($this->option('namespace'))
             ->setOutputPath($this->option('output-path'))
             ->setBaseClassName($this->option('base-class-name'))
+            ->setClassType($this->option('class-type'))
             ->setImplements($this->option('implements'))
             ->setNoTimestamps($this->option('no-timestamps'))
             ->setDateFormat($this->option('date-format'))
