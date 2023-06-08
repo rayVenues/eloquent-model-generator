@@ -1,6 +1,6 @@
 <?php
 
-namespace Ray\Tests\Integration;
+namespace Tests\Feature;
 
 use Exception;
 use Illuminate\Database\Connectors\SQLiteConnector;

@@ -19,6 +19,7 @@ class Config
     private ?string $namespace = null;
     private ?string $tableName = null;
     private ?string $path = null;
+    private ?string $implements;
 
     public function getClassName(): ?string
     {
@@ -132,5 +133,15 @@ class Config
         $this->noBackup = true;
 
         return $this;
+    }
+
+    public function setImplements(string $interface): self
+    {
+        $this->implements = $interface;
+    }
+
+    public function getImplements(): string
+    {
+        return $this->implements;
     }
 }

@@ -12,4 +12,6 @@ return [
     'no_backup' => null,
     'db_types' => null,
     'class-type' => null,
+    'implements' => null,
+
 ];

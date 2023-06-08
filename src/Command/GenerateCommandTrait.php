@@ -2,6 +2,7 @@
 
 namespace Ray\EloquentModelGenerator\Command;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 use Ray\EloquentModelGenerator\Config\Config;
@@ -11,6 +12,9 @@ use Symfony\Component\Console\Input\InputOption;
 
 trait GenerateCommandTrait
 {
+    /**
+     * @throws Exception
+     */
     protected function createConfig(): Config
     {
         return (new Config())
@@ -18,6 +22,7 @@ trait GenerateCommandTrait
             ->setNamespace($this->option('namespace'))
             ->setOutputPath($this->option('output-path'))
             ->setBaseClassName($this->option('base-class-name'))
+            ->setImplements($this->option('implements'))
             ->setNoTimestamps($this->option('no-timestamps'))
             ->setDateFormat($this->option('date-format'))
             ->setConnection($this->option('connection'));
@@ -76,7 +81,8 @@ trait GenerateCommandTrait
             ['date-format', 'df', InputOption::VALUE_OPTIONAL, 'dateFormat property', config('eloquent_model_generator.date_format')],
             ['connection', 'cn', InputOption::VALUE_OPTIONAL, 'Connection property', config('eloquent_model_generator.connection')],
             ['no-backup', 'b', InputOption::VALUE_OPTIONAL, 'Backup existing model', config('eloquent_model_generator.no_backup', false)],
-            ['class-type', 'ct', InputOption::VALUE_NONE, 'Set Model Class type (abstract or final)', config('eloquent_model_generator.class_type', false)],
+            ['class-type', 'ct', InputOption::VALUE_OPTIONAL, 'Set Model Class type (abstract or final)', config('eloquent_model_generator.class_type', false)],
+            ['implements', 'im', InputOption::VALUE_OPTIONAL, 'Set Model Class implements', config('eloquent_model_generator.implements', false)],
         ];
     }
 }
