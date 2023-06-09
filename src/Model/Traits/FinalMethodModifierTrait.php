@@ -3,10 +3,10 @@
 namespace Ray\EloquentModelGenerator\Model\Traits;
 
 /**
- * Trait FinalModifierTrait
+ * Trait FinalMethodModifierTrait
  * @package App\CodeGenerator\Model\Traits
  */
-trait FinalModifierTrait
+trait FinalMethodModifierTrait
 {
     public function __construct()
     {

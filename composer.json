@@ -29,7 +29,8 @@
     "doctrine/dbal": "^3.3"
   },
   "require-dev": {
-    "pestphp/pest": "^2.6"
+    "pestphp/pest": "^2.6",
+    "mockery/mockery": "^1.6"
   },
   "extra": {
     "laravel": {

@@ -3,10 +3,10 @@
 namespace Ray\EloquentModelGenerator\Model;
 
 use Ray\EloquentModelGenerator\Exception\ValidationException;
-use Ray\EloquentModelGenerator\Model\Traits\AbstractModifierTrait;
+use Ray\EloquentModelGenerator\Model\Traits\AbstractMethodModifierTrait;
 use Ray\EloquentModelGenerator\Model\Traits\AccessModifierTrait;
 use Ray\EloquentModelGenerator\Model\Traits\DocBlockTrait;
-use Ray\EloquentModelGenerator\Model\Traits\FinalModifierTrait;
+use Ray\EloquentModelGenerator\Model\Traits\FinalMethodModifierTrait;
 use Ray\EloquentModelGenerator\Model\Traits\StaticModifierTrait;
 
 /**
@@ -15,10 +15,10 @@ use Ray\EloquentModelGenerator\Model\Traits\StaticModifierTrait;
  */
 class MethodModel extends BaseMethodModel
 {
-    use AbstractModifierTrait;
+    use AbstractMethodModifierTrait;
     use AccessModifierTrait;
     use DocBlockTrait;
-    use FinalModifierTrait;
+    use FinalMethodModifierTrait;
     use StaticModifierTrait;
 
     /**

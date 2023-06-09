@@ -3,7 +3,7 @@
 namespace Ray\EloquentModelGenerator\Model\Traits;
 
 /**
- * Trait AbstractModifierTrait
+ * Trait AbstractMethodModifierTrait
  * @package App\CodeGenerator\Model\Traits
  */
 trait ClassTypeModifierTrait
