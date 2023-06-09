@@ -53,6 +53,19 @@ beforeEach(
 
     });
 
+it('Generates a User Model.',
+    function () {
+        $config = (new Config())
+            ->setClassName('User')
+            ->setNamespace('App\Models')
+            ->setBaseClassName(Model::class);
+
+        $model = $this->generator->generateModel($config);
+        $a = $model->render();
+        $b = file_get_contents(__DIR__ . '/resources/' . 'User' . '.php.generated');
+        expect($a)->toEqual($b);
+    });
+
 it('Generates an abstract User Model.',
     function () {
         $config = (new Config())
