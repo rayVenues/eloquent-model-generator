@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Artisan;
 
 class HelpCommand extends Command
 {
-    protected $signature = 'ray:help {command?}';
+    protected $name = 'ray:help';
 
     protected $description = 'Display the parameters for a command with the given signature';
 
