@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Ray\EloquentModelGenerator\Command\GenerateModelCommand;
 use Ray\EloquentModelGenerator\Command\GenerateModelsCommand;
+use Ray\EloquentModelGenerator\Command\HelpCommand;
 use Ray\EloquentModelGenerator\EventListener\GenerateCommandEventListener;
 use Ray\EloquentModelGenerator\Generator;
 use Ray\EloquentModelGenerator\Processor\CustomPrimaryKeyProcessor;
@@ -28,6 +29,7 @@ class GeneratorServiceProvider extends ServiceProvider
         $this->commands([
             GenerateModelCommand::class,
             GenerateModelsCommand::class,
+            HelpCommand::class,
         ]);
 
         $this->app->singleton(TypeRegistry::class);
