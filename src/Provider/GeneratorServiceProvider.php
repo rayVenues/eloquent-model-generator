@@ -9,6 +9,7 @@ use Ray\EloquentModelGenerator\Command\GenerateModelCommand;
 use Ray\EloquentModelGenerator\Command\GenerateModelsCommand;
 use Ray\EloquentModelGenerator\EventListener\GenerateCommandEventListener;
 use Ray\EloquentModelGenerator\Generator;
+use Ray\EloquentModelGenerator\Processor\ClassDefinitionProcessor;
 use Ray\EloquentModelGenerator\Processor\CustomPrimaryKeyProcessor;
 use Ray\EloquentModelGenerator\Processor\CustomPropertyProcessor;
 use Ray\EloquentModelGenerator\Processor\FieldProcessor;
@@ -39,6 +40,7 @@ class GeneratorServiceProvider extends ServiceProvider
             RelationProcessor::class,
             CustomPropertyProcessor::class,
             TableNameProcessor::class,
+            ClassDefinitionProcessor::class,
             CustomPrimaryKeyProcessor::class,
             SoftDeleteTraitProcessor::class,
             TableWithoutTimestampsProcessor::class,

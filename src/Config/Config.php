@@ -21,6 +21,20 @@ class Config
     private ?string $path = null;
     private ?string $implements;
 
+    private ?string $uses = null;
+
+    public function getUses(): ?string
+    {
+        return $this->uses;
+    }
+
+    public function setUses(?string $uses): self
+    {
+        $this->uses = $uses;
+
+        return $this;
+    }
+
     public function getClassName(): ?string
     {
         return $this->className;

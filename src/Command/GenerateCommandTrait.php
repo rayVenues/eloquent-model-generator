@@ -19,6 +19,7 @@ trait GenerateCommandTrait
     {
         return (new Config())
             ->setTableName($this->option('table-name'))
+            ->setUses($this->option('uses'))
             ->setNamespace($this->option('namespace'))
             ->setOutputPath($this->option('output-path'))
             ->setBaseClassName($this->option('base-class-name'))
@@ -75,6 +76,7 @@ trait GenerateCommandTrait
     {
         return [
             ['base-class-name', 'bc', InputOption::VALUE_OPTIONAL, 'Model parent class', config('eloquent_model_generator.base_class_name', Model::class)],
+            ['uses', 'us', InputOption::VALUE_OPTIONAL, 'Model base class uses', config('eloquent_model_generator.base_class_uses')],
             ['class-type', 'ct', InputOption::VALUE_OPTIONAL, 'Set Model Class type (abstract or final)', config('eloquent_model_generator.class_type', false)],
             ['connection', 'cn', InputOption::VALUE_OPTIONAL, 'Connection property', config('eloquent_model_generator.connection')],
             ['date-format', 'df', InputOption::VALUE_OPTIONAL, 'dateFormat property', config('eloquent_model_generator.date_format')],

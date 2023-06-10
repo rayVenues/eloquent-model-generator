@@ -27,9 +27,7 @@ class TableNameProcessor implements ProcessorInterface
     public function process(EloquentModel $model, Config $config): void
     {
         $className = $config->getClassName();
-        $baseClassName = $config->getBaseClassName();
         $tableName = $config->getTableName() ?: EmgHelper::getTableNameByClassName($className);
-        $classType = $config->getClassType();
 
         $schemaManager = $this->databaseManager->connection($config->getConnection())->getDoctrineSchemaManager();
         $prefixedTableName = Prefix::add($tableName);
@@ -37,16 +35,12 @@ class TableNameProcessor implements ProcessorInterface
             throw new GeneratorException(sprintf('Table %s does not exist', $prefixedTableName));
         }
 
-        $model
-            ->setName(new ClassNameModel($className, EmgHelper::getShortClassName($baseClassName), $classType))
-            ->addUses(new UseClassModel(ltrim($baseClassName, '\\')))
-            ->setTableName($tableName);
-
-        if ($model->getTableName() !== EmgHelper::getTableNameByClassName($className)) {
+        if ($tableName !== EmgHelper::getTableNameByClassName($className)) {
             $property = new PropertyModel('table', 'protected', $model->getTableName());
             $property->setDocBlock(new DocBlockModel('The table associated with the model.', '', '@var string'));
             $model->addProperty($property);
         }
+        $model->setTableName($tableName);
     }
 
     public function getPriority(): int
