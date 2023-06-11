@@ -113,7 +113,7 @@ class Config
 
     public function getTimestampsDisabled(): bool
     {
-        return $this->timestampsDisabled;
+        return $this->timestampsDisabled ?? false;
     }
 
     public function getDateFormat(): ?string
@@ -169,7 +169,7 @@ class Config
         return $this->perPage;
     }
 
-    public function setPerPage(int $perPage): self
+    public function setPerPage(?int $perPage): self
     {
         $this->perPage = $perPage;
 
