@@ -32,7 +32,7 @@ class GenerateModelCommand extends Command implements PromptsForMissingInputCont
     {
         try {
             $config = $this->createConfig();
-            $config->setClassName($this->argument('class-name'));
+            $config->setClassName($this->argument('model-name'));
             Prefix::setPrefix($this->databaseManager->connection($config->getConnection())->getTablePrefix());
 
             $model = $this->generator->generateModel($config);
@@ -48,7 +48,7 @@ class GenerateModelCommand extends Command implements PromptsForMissingInputCont
     protected function getArguments(): array
     {
         return [
-            ['class-name', InputArgument::REQUIRED, 'Model class name'],
+            ['model-name', InputArgument::REQUIRED, 'Model name'],
         ];
     }
 
