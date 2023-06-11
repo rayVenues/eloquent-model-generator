@@ -164,6 +164,31 @@ it('Generates a User model with a different table name.',
         expect($a)->toEqual($b);
     });
 
+it('Generates a User model with a base-class-name and uses', function () {
+    $config = (new Config())
+        ->setClassName('User')
+        ->setNamespace('App\Models')
+        ->setBaseClassName("Authenticatable")
+        ->setUses("Illuminate\\Foundation\\Auth\\User as Authenticatable");
+
+    $model = $this->generator->generateModel($config);
+    $a = $model->render();
+    $b = file_get_contents(__DIR__ . '/resources/User-with-base-class-name-and-uses.php.generated');
+    expect($a)->toEqual($b);
+});
+
+it('Generates a User model with a base-class-name and no uses', function () {
+    $config = (new Config())
+        ->setClassName('User')
+        ->setNamespace('App\Models')
+        ->setBaseClassName("Authenticatable");
+
+    $model = $this->generator->generateModel($config);
+    $a = $model->render();
+    $b = file_get_contents(__DIR__ . '/resources/User-with-base-class-name-and-no-uses.php.generated');
+    expect($a)->toEqual($b);
+});
+
 it('Does not allow to specify a non existing table.',
     /**
      * @throws \Exception
