@@ -39,7 +39,6 @@ class GeneratorServiceProvider extends ServiceProvider
             NamespaceProcessor::class,
             RelationProcessor::class,
             CustomPropertyProcessor::class,
-            TableNameProcessor::class,
             ClassDefinitionProcessor::class,
             CustomPrimaryKeyProcessor::class,
             SoftDeleteProcessor::class,
