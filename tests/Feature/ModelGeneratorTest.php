@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\SQLiteConnection;
 use PHPUnit\Framework\MockObject\Exception;
 use Ray\EloquentModelGenerator\Config\Config;
+use Ray\EloquentModelGenerator\Exception\GeneratorException;
 use Ray\EloquentModelGenerator\Generator;
 use Ray\EloquentModelGenerator\Processor\ClassDefinitionProcessor;
 use Ray\EloquentModelGenerator\Processor\CustomPrimaryKeyProcessor;
@@ -56,21 +57,7 @@ beforeEach(
         ]);
     });
 
-it('Generates a Model with a different table name.',
-    function () {
-        $config = (new Config())
-            ->setClassName('User')
-            ->setTableName('roles')
-            ->setNamespace('App\Models')
-            ->setBaseClassName(Model::class);
-
-        $model = $this->generator->generateModel($config);
-        $a = $model->render();
-        $b = file_get_contents(__DIR__ . '/resources/User-with-different-table-name.php.generated');
-        expect($a)->toEqual($b);
-    });
-
-it('Generates a simple User Model.',
+it('Generates a User model.',
     function () {
         $config = (new Config())
             ->setClassName('User')
@@ -83,7 +70,8 @@ it('Generates a simple User Model.',
         expect($a)->toEqual($b);
     });
 
-it('Generates an abstract User Model.',
+
+it('Generates an abstract User model.',
     /**
      * @throws \Exception
      */
@@ -100,7 +88,7 @@ it('Generates an abstract User Model.',
         expect($a)->toEqual($b);
     });
 
-it('Generates a final User Model.',
+it('Generates a final User model.',
     /**
      * @throws \Exception
      */
@@ -117,21 +105,7 @@ it('Generates a final User Model.',
         expect($a)->toEqual($b);
     });
 
-it('Does not allow a class type other than `abstract` or `final`.',
-    /**
-     * @throws \Exception
-     */
-    function () {
-        $config = (new Config())
-            ->setClassName('User')
-            ->setNamespace('App\Models')
-            ->setClassType('not-allowed')
-            ->setBaseClassName(Model::class);
-
-        $this->generator->generateModel($config);
-    })->throws('InvalidArgumentException');
-
-it('Generates a model with custom properties.',
+it('Generates a User model with custom properties.',
     function () {
         $config = (new Config())
             ->setClassName('User')
@@ -145,22 +119,25 @@ it('Generates a model with custom properties.',
         expect($a)->toEqual($b);
     });
 
-it('Generates a Model with output path and no namespace.',
+it('Generates a User model with output path and no namespace.',
     /**
      * @throws \Exception
      */
     function () {
         $config = (new Config())
             ->setClassName('User')
-            ->setOutputPath('TempModels')
-            ->setBaseClassName('Base\ClassName');
+            ->setOutputPath('ModelsNew')
+            ->setBaseClassName(Model::class);
 
         $model = $this->generator->generateModel($config);
         $a = $model->render();
-        expect($a)->toContain('namespace App\TempModels');
+        expect($a)->toContain('namespace App\ModelsNew');
     });
 
-it('Generates a Model specifying output-path and namespace options. The namespace should be App\Models.',
+it('Generates a User model specifying output-path and namespace options. The namespace should be App\Models.',
+    /**
+     * @throws \Exception
+     */
     function () {
         $config = (new Config())
             ->setClassName('User')
@@ -173,17 +150,76 @@ it('Generates a Model specifying output-path and namespace options. The namespac
         expect($a)->toContain('namespace App\Models');
     });
 
-//it('Disables Model timestamps when a table does not have created_at and updated_at columns.',
-//    function () {
-//        $config = (new Config())
-//            ->setClassName('Role')
-//            ->setNamespace('App\Models')
-//            ->setBaseClassName(Model::class);
-//
-//        $model = $this->generator->generateModel($config);
-//        $a = $model->render();
-//        $b = file_get_contents(__DIR__ . '/resources/Role-without-created-at-and-updated-at.php.generated');
-//        expect($a)->toEqual($b);
-//    });
+it('Generates a User model with a different table name.',
+    function () {
+        $config = (new Config())
+            ->setClassName('User')
+            ->setTableName('roles')
+            ->setNamespace('App\Models')
+            ->setBaseClassName(Model::class);
+
+        $model = $this->generator->generateModel($config);
+        $a = $model->render();
+        $b = file_get_contents(__DIR__ . '/resources/User-with-different-table-name.php.generated');
+        expect($a)->toEqual($b);
+    });
+
+it('Does not allow to specify a non existing table.',
+    /**
+     * @throws \Exception
+     */
+    function () {
+        $config = (new Config())
+            ->setClassName('User')
+            ->setNamespace('App\Models')
+            ->setTableName('non-existing-table')
+            ->setBaseClassName(Model::class);
+
+        $this->generator->generateModel($config);
+    })->throws(GeneratorException::class);
+
+it('Does not allow a class type other than `abstract` or `final`.',
+    /**
+     * @throws \Exception
+     */
+    function () {
+        $config = (new Config())
+            ->setClassName('User')
+            ->setNamespace('App\Models')
+            ->setClassType('not-allowed')
+            ->setBaseClassName(Model::class);
+
+        $this->generator->generateModel($config);
+    })->throws(GeneratorException::class);
+
+it('Does not allow an output path outside project structure.',
+    /**
+     * @throws \Exception
+     */
+    function () {
+        $config = (new Config())
+            ->setClassName('User')
+            ->setNamespace('App\Models')
+            ->setBaseClassName(Model::class)
+            ->setOutputPath('/some/path/outside/project/structure');
+        $model = $this->generator->generateModel($config);
+        $model->render();
+    })->throws(GeneratorException::class);
+
+
+it('Disables Model timestamps when a table does not have created_at and updated_at columns.',
+    /**
+     * @throws \Exception
+     */
+    function () {
+        $config = (new Config())
+            ->setClassName('Role')
+            ->setNamespace('App\Models')
+            ->setBaseClassName(Model::class);
+
+        $model = $this->generator->generateModel($config);
+        $a = $model->render();
+        expect($a)->toContain('public $timestamps = false;');
+    });;
 
 

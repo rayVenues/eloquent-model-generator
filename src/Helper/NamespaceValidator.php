@@ -4,6 +4,7 @@ namespace Ray\EloquentModelGenerator\Helper;
 
 use Exception;
 use Ray\EloquentModelGenerator\Exception\GeneratorException;
+use Ray\EloquentModelGenerator\Exception\GeneratorExceptionType;
 
 class NamespaceValidator
 {

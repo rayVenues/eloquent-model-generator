@@ -18,7 +18,7 @@ abstract class RenderableModel implements RenderableInterface, LineableInterface
         $this->validate();
         $lines = $this->toLines();
 
-        if (!is_array($lines)) {
+        if (! is_array($lines)) {
             $lines = [$lines];
         }
 
@@ -62,8 +62,8 @@ abstract class RenderableModel implements RenderableInterface, LineableInterface
     {
         $lines = [];
         foreach ($array as $item) {
-            if (!$item instanceof RenderableInterface) {
-                throw new GeneratorException('Invalid item type');
+            if (! $item instanceof RenderableInterface) {
+                throw new GeneratorException('Invalid item type.');
             }
 
             $lines[] = $item->render($indent);

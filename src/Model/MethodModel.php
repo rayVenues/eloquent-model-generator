@@ -2,6 +2,7 @@
 
 namespace Ray\EloquentModelGenerator\Model;
 
+use Ray\EloquentModelGenerator\Exception\GeneratorException;
 use Ray\EloquentModelGenerator\Exception\ValidationException;
 use Ray\EloquentModelGenerator\Model\Traits\AbstractMethodModifierTrait;
 use Ray\EloquentModelGenerator\Model\Traits\AccessModifierTrait;
@@ -116,7 +117,7 @@ class MethodModel extends BaseMethodModel
     protected function validate(): bool
     {
         if ($this->abstract and ($this->final or $this->static)) {
-            throw new ValidationException('Entity cannot be abstract and final or static at the same time');
+            throw new ValidationException('Method cannot be abstract and final or static at the same time.');
         }
 
         return parent::validate();

@@ -48,7 +48,7 @@ class EloquentModel extends ClassModel
             $docBlock = sprintf(': \%s', EloquentBelongsToMany::class);
 
         } else {
-            throw new GeneratorException('Relation not supported');
+            throw new GeneratorException('Relation not supported.');
         }
 
         return $docBlock;
@@ -81,7 +81,7 @@ class EloquentModel extends ClassModel
 
             $virtualPropertyType = sprintf('%s[]', $relationClass);
         } else {
-            throw new GeneratorException('Relation not supported');
+            throw new GeneratorException('Relation not supported.');
         }
 
         $method = new MethodModel($name);

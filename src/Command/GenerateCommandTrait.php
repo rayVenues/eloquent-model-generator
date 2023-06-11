@@ -44,7 +44,7 @@ trait GenerateCommandTrait
         }
         $bytesWritten = file_put_contents($outputFilepath, $content);
         if ($bytesWritten === false) {
-            throw new GeneratorException(sprintf('Could not write to %s', $outputFilepath));
+            throw new GeneratorException(sprintf('Could not write to %s.', $outputFilepath));
         }
     }
 
@@ -62,12 +62,12 @@ trait GenerateCommandTrait
 
         if (! is_dir($path)) {
             if (! mkdir($path, 0777, true)) {
-                throw new GeneratorException(sprintf('Could not create directory %s', $path));
+                throw new GeneratorException(sprintf('Could not create directory %s.', $path));
             }
         }
 
         if (! is_writeable($path)) {
-            throw new GeneratorException(sprintf('%s is not writeable', $path));
+            throw new GeneratorException(sprintf('%s is not writeable.', $path));
         }
 
         return $path;

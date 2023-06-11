@@ -4,13 +4,12 @@ namespace Ray\EloquentModelGenerator\Processor;
 
 use Doctrine\DBAL\Exception;
 use Illuminate\Database\DatabaseManager;
+use Ray\EloquentModelGenerator\Config\Config;
 use Ray\EloquentModelGenerator\Exception\GeneratorException;
-use Ray\EloquentModelGenerator\Helper\DatabaseHelper;
 use Ray\EloquentModelGenerator\Helper\EmgHelper;
 use Ray\EloquentModelGenerator\Model\DocBlockModel;
-use Ray\EloquentModelGenerator\Model\PropertyModel;
-use Ray\EloquentModelGenerator\Config\Config;
 use Ray\EloquentModelGenerator\Model\EloquentModel;
+use Ray\EloquentModelGenerator\Model\PropertyModel;
 
 class ModelPropertyProcessor implements ProcessorInterface
 {
@@ -49,7 +48,7 @@ class ModelPropertyProcessor implements ProcessorInterface
             $className = EmgHelper::getTableNameByClassName($config->getClassName());
             $schemaManager = $this->databaseManager->connection($config->getConnection())->getDoctrineSchemaManager();
             if (! $schemaManager->tablesExist($tableName)) {
-                throw new GeneratorException(sprintf('Table %s does not exist', $tableName));
+                throw new GeneratorException(sprintf('Table %s does not exist.', $tableName));
             }
             if ($tableName !== $className) {
                 $pTableName = new PropertyModel('table', 'protected', $config->getTableName());

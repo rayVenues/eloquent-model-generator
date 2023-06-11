@@ -25,30 +25,35 @@ class GenerateModelsCommand extends Command
 
     /**
      * @throws GeneratorException
-     * @throws Exception
+     * @throws \Exception
      */
     public function handle(): void
     {
-        $config = $this->createConfig();
-        Prefix::setPrefix($this->databaseManager->connection($config->getConnection())->getTablePrefix());
+        try {
+            $config = $this->createConfig();
+            Prefix::setPrefix($this->databaseManager->connection($config->getConnection())->getTablePrefix());
 
-        $schemaManager = $this->databaseManager->connection($config->getConnection())->getDoctrineSchemaManager();
-        $tables = $schemaManager->listTables();
-        $skipTables = $this->option('skip-table');
-        if (count($skipTables) === 1 && str_contains($skipTables[0], ',')) {
-            $skipTables = explode(',', $skipTables[0]);
-        }
-        foreach ($tables as $table) {
-            $tableName = Prefix::remove($table->getName());
-            if (in_array($tableName, $skipTables)) {
-                continue;
+            $schemaManager = $this->databaseManager->connection($config->getConnection())->getDoctrineSchemaManager();
+            $tables = $schemaManager->listTables();
+            $skipTables = $this->option('skip-table');
+            if (count($skipTables) === 1 && str_contains($skipTables[0], ',')) {
+                $skipTables = explode(',', $skipTables[0]);
+            }
+            foreach ($tables as $table) {
+                $tableName = Prefix::remove($table->getName());
+                if (in_array($tableName, $skipTables)) {
+                    continue;
+                }
+
+                $config->setClassName(EmgHelper::getClassNameByTableName($tableName));
+                $model = $this->generator->generateModel($config);
+                $this->saveModel($model);
+
+                $this->output->writeln(sprintf('Model %s generated', $model->getName()->getName()));
             }
 
-            $config->setClassName(EmgHelper::getClassNameByTableName($tableName));
-            $model = $this->generator->generateModel($config);
-            $this->saveModel($model);
-
-            $this->output->writeln(sprintf('Model %s generated', $model->getName()->getName()));
+        } catch (Exception $e) {
+            throw new GeneratorException($e->getMessage());
         }
     }
 

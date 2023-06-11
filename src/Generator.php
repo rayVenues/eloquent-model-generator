@@ -2,8 +2,10 @@
 
 namespace Ray\EloquentModelGenerator;
 
+use Exception;
 use IteratorAggregate;
 use Ray\EloquentModelGenerator\Config\Config;
+use Ray\EloquentModelGenerator\Exception\GeneratorException;
 use Ray\EloquentModelGenerator\Model\EloquentModel;
 use Ray\EloquentModelGenerator\Processor\ProcessorInterface;
 
@@ -32,8 +34,13 @@ class Generator
 
         $this->sortProcessorsByPriority();
 
-        foreach ($this->processors as $processor) {
-            $processor->process($model, $config);
+        try {
+            foreach ($this->processors as $processor) {
+                $processor->process($model, $config);
+            }
+
+        } catch (Exception $e) {
+            throw new GeneratorException($e->getMessage());
         }
 
         return $model;

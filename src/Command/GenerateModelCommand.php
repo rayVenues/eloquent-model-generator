@@ -2,6 +2,7 @@
 
 namespace Ray\EloquentModelGenerator\Command;
 
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Database\DatabaseManager;
 use Ray\EloquentModelGenerator\Exception\GeneratorException;
@@ -26,18 +27,22 @@ class GenerateModelCommand extends Command implements PromptsForMissingInputCont
     }
 
     /**
-     * @throws GeneratorException
      */
     public function handle(): void
     {
-        $config = $this->createConfig();
-        $config->setClassName($this->argument('class-name'));
-        Prefix::setPrefix($this->databaseManager->connection($config->getConnection())->getTablePrefix());
+        try {
+            $config = $this->createConfig();
+            $config->setClassName($this->argument('class-name'));
+            Prefix::setPrefix($this->databaseManager->connection($config->getConnection())->getTablePrefix());
 
-        $model = $this->generator->generateModel($config);
-        $this->saveModel($model);
+            $model = $this->generator->generateModel($config);
+            $this->saveModel($model);
 
-        $this->output->writeln(sprintf('Model %s generated', $model->getName()->getName()));
+            $this->output->writeln(sprintf('Model %s generated', $model->getName()->getName()));
+        } catch (Exception $e) {
+            $this->error($e->getMessage());
+        }
+
     }
 
     protected function getArguments(): array

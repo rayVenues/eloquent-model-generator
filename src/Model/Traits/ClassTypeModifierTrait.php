@@ -2,6 +2,9 @@
 
 namespace Ray\EloquentModelGenerator\Model\Traits;
 
+use Ray\EloquentModelGenerator\Exception\GeneratorException;
+use Ray\EloquentModelGenerator\Exception\ValidationException;
+
 /**
  * Trait AbstractMethodModifierTrait
  * @package App\CodeGenerator\Model\Traits
@@ -22,13 +25,14 @@ trait ClassTypeModifierTrait
     }
 
     /**
+     * @param string $classType
      * @return $this
-     * @throws \Exception
+     * @throws GeneratorException
      */
     public function setClassType(string $classType): static
     {
         if (! in_array($classType, ['final', 'abstract', ''])) {
-            throw new \InvalidArgumentException('Class type must be either final or abstract');
+            throw new GeneratorException(sprintf('Class type must be either final or abstract, %s given.', $classType));
         }
         $this->classType = $classType;
 
