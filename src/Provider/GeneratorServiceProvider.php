@@ -11,7 +11,7 @@ use Ray\EloquentModelGenerator\EventListener\GenerateCommandEventListener;
 use Ray\EloquentModelGenerator\Generator;
 use Ray\EloquentModelGenerator\Processor\ClassDefinitionProcessor;
 use Ray\EloquentModelGenerator\Processor\CustomPrimaryKeyProcessor;
-use Ray\EloquentModelGenerator\Processor\CustomPropertyProcessor;
+use Ray\EloquentModelGenerator\Processor\ModelPropertyProcessor;
 use Ray\EloquentModelGenerator\Processor\FieldProcessor;
 use Ray\EloquentModelGenerator\Processor\NamespaceProcessor;
 use Ray\EloquentModelGenerator\Processor\RelationProcessor;
@@ -38,7 +38,7 @@ class GeneratorServiceProvider extends ServiceProvider
             FieldProcessor::class,
             NamespaceProcessor::class,
             RelationProcessor::class,
-            CustomPropertyProcessor::class,
+            ModelPropertyProcessor::class,
             ClassDefinitionProcessor::class,
             CustomPrimaryKeyProcessor::class,
             SoftDeleteProcessor::class,

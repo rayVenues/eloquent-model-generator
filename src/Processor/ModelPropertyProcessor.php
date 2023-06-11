@@ -12,7 +12,7 @@ use Ray\EloquentModelGenerator\Model\PropertyModel;
 use Ray\EloquentModelGenerator\Config\Config;
 use Ray\EloquentModelGenerator\Model\EloquentModel;
 
-class CustomPropertyProcessor implements ProcessorInterface
+class ModelPropertyProcessor implements ProcessorInterface
 {
 
     public function __construct(private readonly DatabaseManager $databaseManager)

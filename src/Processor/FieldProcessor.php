@@ -43,7 +43,7 @@ class FieldProcessor implements ProcessorInterface
         $fillableProperty = new PropertyModel('fillable');
         $fillableProperty->setAccess('protected')
             ->setValue($columnNames)
-            ->setDocBlock(new DocBlockModel('@var array'));
+            ->setDocBlock(new DocBlockModel('The attributes that are mass assignable.', '@var array<string>'));
         $model->addProperty($fillableProperty);
     }
 

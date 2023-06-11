@@ -28,14 +28,12 @@ class TableTimestampsProcessor implements ProcessorInterface
             return;
         }
 
-        if ($config->getTimestampsDisabled()) {
-            $pNoTimestamps = new PropertyModel('timestamps', 'public', false);
-            $pNoTimestamps->setDocBlock(
-                docBlock: new DocBlockModel('Indicates if the model should be timestamped.', '', '@var bool')
-            );
-            $model->addProperty($pNoTimestamps);
+        $pNoTimestamps = new PropertyModel('timestamps', 'public', false);
+        $pNoTimestamps->setDocBlock(
+            docBlock: new DocBlockModel('Indicates if the model should be timestamped.', '@var bool')
+        );
+        $model->addProperty($pNoTimestamps);
 
-        }
     }
 
     public function getPriority(): int

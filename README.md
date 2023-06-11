@@ -234,12 +234,12 @@ class PerPageProcessor implements ProcessorInterface
     public function process(EloquentModel $model, Config $config): void
     {
         $propertyModel = new PropertyModel('perPage', 'protected', 20);
-        $dockBlockModel = new DocBlockModel('The number of models to return for pagination.', '', '@var int');
+        $dockBlockModel = new DocBlockModel('The number of models to return for pagination.', '@var int');
         $propertyModel->setDocBlock($dockBlockModel);
         $model->addProperty($propertyModel);
         
         $propertyModel = new PropertyModel('guarded', 'protected', []);
-        $dockBlockModel = new DocBlockModel('¡Tengo miedo!.', '', '@var array');
+        $dockBlockModel = new DocBlockModel('¡Tengo miedo!.', '@var array');
         $propertyModel->setDocBlock($dockBlockModel);
         $model->addProperty($propertyModel);
 

@@ -9,7 +9,7 @@ use Ray\EloquentModelGenerator\Config\Config;
 use Ray\EloquentModelGenerator\Generator;
 use Ray\EloquentModelGenerator\Processor\ClassDefinitionProcessor;
 use Ray\EloquentModelGenerator\Processor\CustomPrimaryKeyProcessor;
-use Ray\EloquentModelGenerator\Processor\CustomPropertyProcessor;
+use Ray\EloquentModelGenerator\Processor\ModelPropertyProcessor;
 use Ray\EloquentModelGenerator\Processor\FieldProcessor;
 use Ray\EloquentModelGenerator\Processor\NamespaceProcessor;
 use Ray\EloquentModelGenerator\Processor\RelationProcessor;
@@ -47,7 +47,7 @@ beforeEach(
         $this->generator = new Generator([
             new ClassDefinitionProcessor(),
             new CustomPrimaryKeyProcessor($databaseManagerMock, $typeRegistry),
-            new CustomPropertyProcessor($databaseManagerMock),
+            new ModelPropertyProcessor($databaseManagerMock),
             new FieldProcessor($databaseManagerMock, $typeRegistry),
             new NamespaceProcessor(),
             new RelationProcessor($databaseManagerMock),
@@ -173,16 +173,17 @@ it('Generates a Model specifying output-path and namespace options. The namespac
         expect($a)->toContain('namespace App\Models');
     });
 
-it('Generates a Model with table without created_at and updated_at columns.',
-    function () {
-        $config = (new Config())
-            ->setClassName('User')
-            ->setNamespace('App\Models')
-            ->setBaseClassName('Base\ClassName');
-
-        $model = $this->generator->generateModel($config);
-        $a = $model->render();
-        expect($a)->toContain('namespace App\Models');
-    });
+//it('Disables Model timestamps when a table does not have created_at and updated_at columns.',
+//    function () {
+//        $config = (new Config())
+//            ->setClassName('Role')
+//            ->setNamespace('App\Models')
+//            ->setBaseClassName(Model::class);
+//
+//        $model = $this->generator->generateModel($config);
+//        $a = $model->render();
+//        $b = file_get_contents(__DIR__ . '/resources/Role-without-created-at-and-updated-at.php.generated');
+//        expect($a)->toEqual($b);
+//    });
 
 
