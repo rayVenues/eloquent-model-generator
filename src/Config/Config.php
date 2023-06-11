@@ -3,9 +3,9 @@
 namespace Ray\EloquentModelGenerator\Config;
 
 use Exception;
-use Ray\EloquentModelGenerator\Helper\EmgHelper;
 use Ray\EloquentModelGenerator\Helper\NamespaceValidator;
 use Ray\EloquentModelGenerator\Model\Traits\ClassTypeModifierTrait;
+use Ray\EloquentModelGenerator\Model\UseClassModel;
 
 class Config
 {
@@ -13,26 +13,39 @@ class Config
 
     private ?bool $noBackup = false;
     private ?bool $timestampsDisabled = false;
+    private ?int $perPage = null;
     private ?string $baseClassName = null;
     private ?string $className = null;
     private ?string $connection = null;
     private ?string $dateFormat = null;
-    private ?string $namespace = null;
-    private ?string $tableName = null;
-    private ?string $path = null;
     private ?string $implements;
+    private ?string $namespace = null;
+    private ?string $path = null;
+    private ?string $tableName = null;
+    private ?array $uses = null;
+    private ?string $usesTrait = null;
 
-    private ?string $uses = null;
-    private ?int $perPage = null;
-
-    public function getUses(): ?string
+    /**
+     * @return array|null
+     */
+    public function getUses(): ?array
     {
         return $this->uses;
     }
 
-    public function setUses(?string $uses): self
+    /**
+     * @param array|string $uses
+     * @return $this
+     */
+    public function addUses(array | string $uses): static
     {
-        $this->uses = $uses;
+        if (! $uses) {
+            return $this;
+        }
+        foreach ((array) $uses as $use) {
+            $useClassModel = new UseClassModel($use);
+            $this->uses[] = $useClassModel;
+        }
 
         return $this;
     }
@@ -57,6 +70,18 @@ class Config
     public function setTableName(?string $tableName): self
     {
         $this->tableName = $tableName;
+
+        return $this;
+    }
+
+    public function getUsesTrait(): ?string
+    {
+        return $this->usesTrait;
+    }
+
+    public function setUsesTrait(?string $trait): self
+    {
+        $this->usesTrait = $trait;
 
         return $this;
     }

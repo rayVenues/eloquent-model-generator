@@ -37,22 +37,31 @@ class ClassModel extends RenderableModel
     {
         $lines = [];
         $lines[] = $this->ln('<?php');
+
         if ($this->namespace !== null) {
             $lines[] = $this->ln($this->namespace->render());
         }
+
         if ($this->uses && count($this->uses) > 0) {
             $lines[] = $this->renderArrayLn($this->uses);
         }
+
         $this->prepareDocBlock();
         $lines[] = $this->docBlock->render();
+
+        // Class name
         $lines[] = $this->name->render();
+
         if (count($this->traits) > 0) {
             $lines[] = $this->renderArrayLn($this->traits, 4);
         }
+
         if (count($this->constants) > 0) {
             $lines[] = $this->renderArrayLn($this->constants, 4);
         }
+
         $this->processProperties($lines);
+
         $this->processMethods($lines);
         /**
          * Fix the bug with empty line before closing bracket
@@ -79,6 +88,26 @@ class ClassModel extends RenderableModel
     public function setName(ClassNameModel $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClassType(): string
+    {
+        return $this->classType;
+    }
+
+    /**
+     * @param string $classType
+     *
+     * @return $this
+     */
+    public function setClassType(string $classType): static
+    {
+        $this->classType = $classType;
 
         return $this;
     }

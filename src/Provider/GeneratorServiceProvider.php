@@ -16,8 +16,8 @@ use Ray\EloquentModelGenerator\Processor\FieldProcessor;
 use Ray\EloquentModelGenerator\Processor\NamespaceProcessor;
 use Ray\EloquentModelGenerator\Processor\RelationProcessor;
 use Ray\EloquentModelGenerator\Processor\SoftDeleteProcessor;
-use Ray\EloquentModelGenerator\Processor\TableNameProcessor;
 use Ray\EloquentModelGenerator\Processor\TableTimestampsProcessor;
+use Ray\EloquentModelGenerator\Processor\UsesTraitProcessor;
 use Ray\EloquentModelGenerator\TypeRegistry;
 
 class GeneratorServiceProvider extends ServiceProvider
@@ -43,6 +43,7 @@ class GeneratorServiceProvider extends ServiceProvider
             CustomPrimaryKeyProcessor::class,
             SoftDeleteProcessor::class,
             TableTimestampsProcessor::class,
+            UsesTraitProcessor::class,
         ], self::PROCESSOR_TAG);
 
         $this->app->bind(Generator::class, function ($app) {

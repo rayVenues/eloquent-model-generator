@@ -24,8 +24,10 @@ class ClassDefinitionProcessor implements ProcessorInterface
 
         $model
             ->setName(new ClassNameModel($className, EmgHelper::getShortClassName($baseClassName), $classType));
-        if ($config->getUses() !== null && $config->getBaseClassName() !== null) {
-            $model->addUses(new UseClassModel($config->getUses()));
+        if ($config->getUses() !== null) {
+            foreach ($config->getUses() as $use) {
+                $model->addUses($use);
+            }
         } else {
             $model->addUses(new UseClassModel(ltrim($baseClassName, '\\')));
         }

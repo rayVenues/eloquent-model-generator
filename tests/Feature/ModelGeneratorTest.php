@@ -16,6 +16,7 @@ use Ray\EloquentModelGenerator\Processor\NamespaceProcessor;
 use Ray\EloquentModelGenerator\Processor\RelationProcessor;
 use Ray\EloquentModelGenerator\Processor\SoftDeleteProcessor;
 use Ray\EloquentModelGenerator\Processor\TableTimestampsProcessor;
+use Ray\EloquentModelGenerator\Processor\UsesTraitProcessor;
 use Ray\EloquentModelGenerator\TypeRegistry;
 
 // TODO: Implement beforeAll()
@@ -54,6 +55,7 @@ beforeEach(
             new RelationProcessor($databaseManagerMock),
             new SoftDeleteProcessor($databaseManagerMock),
             new TableTimestampsProcessor($databaseManagerMock),
+            new UsesTraitProcessor(),
         ]);
     });
 
@@ -67,6 +69,22 @@ it('Generates a User model.',
         $model = $this->generator->generateModel($config);
         $a = $model->render();
         $b = file_get_contents(__DIR__ . '/resources/' . 'User' . '.php.generated');
+        expect($a)->toEqual($b);
+    });
+
+it('Generates a User model with factory.',
+    function () {
+        $config = (new Config())
+            ->setClassName('User')
+            ->setNamespace('App\Models')
+            ->setUsesTrait('HasFactory')
+            ->addUses('Illuminate\Database\Eloquent\Model')
+            ->addUses('Illuminate\Database\Eloquent\Factories\HasFactory')
+            ->setBaseClassName(Model::class);
+
+        $model = $this->generator->generateModel($config);
+        $a = $model->render();
+        $b = file_get_contents(__DIR__ . '/resources/' . 'User-with-has-factory' . '.php.generated');
         expect($a)->toEqual($b);
     });
 
@@ -169,7 +187,7 @@ it('Generates a User model with a base-class-name and uses', function () {
         ->setClassName('User')
         ->setNamespace('App\Models')
         ->setBaseClassName("Authenticatable")
-        ->setUses("Illuminate\\Foundation\\Auth\\User as Authenticatable");
+        ->addUses("Illuminate\\Foundation\\Auth\\User as Authenticatable");
 
     $model = $this->generator->generateModel($config);
     $a = $model->render();
