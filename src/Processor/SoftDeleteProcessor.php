@@ -8,7 +8,7 @@ use Ray\EloquentModelGenerator\Config\Config;
 use Ray\EloquentModelGenerator\Model\EloquentModel;
 use Ray\EloquentModelGenerator\Model\UseTraitModel;
 
-class SoftDeleteTraitProcessor implements ProcessorInterface
+class SoftDeleteProcessor implements ProcessorInterface
 {
     public function __construct(private readonly DatabaseManager $databaseManager)
     {

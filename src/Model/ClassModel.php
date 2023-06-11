@@ -13,7 +13,9 @@ use Ray\EloquentModelGenerator\RenderableModel;
 class ClassModel extends RenderableModel
 {
     use DocBlockTrait;
-    protected DocBlockModel   $docBlock;
+
+    protected DocBlockModel $docBlock;
+
     public function __construct(
         protected ?ClassNameModel $name = null,
         protected ?NamespaceModel $namespace = null,
@@ -22,7 +24,7 @@ class ClassModel extends RenderableModel
         protected array           $constants = [],
         protected array           $properties = [],
         protected array           $methods = [],
-        )
+    )
     {
         $this->docBlock = new DocBlockModel();
     }
@@ -31,14 +33,14 @@ class ClassModel extends RenderableModel
      * {@inheritDoc}
      * @throws GeneratorException
      */
-    public function toLines(): string|array
+    public function toLines(): string | array
     {
         $lines = [];
         $lines[] = $this->ln('<?php');
         if ($this->namespace !== null) {
             $lines[] = $this->ln($this->namespace->render());
         }
-        if (count($this->uses) > 0) {
+        if ($this->uses && count($this->uses) > 0) {
             $lines[] = $this->renderArrayLn($this->uses);
         }
         $this->prepareDocBlock();
@@ -232,7 +234,7 @@ class ClassModel extends RenderableModel
     protected function processProperties(array &$lines): void
     {
         $properties = array_filter($this->properties, function ($property) {
-            return !$property instanceof VirtualPropertyModel;
+            return ! $property instanceof VirtualPropertyModel;
         });
         if (count($properties) > 0) {
             $lines[] = $this->renderArrayLn($properties, 4, str_repeat(PHP_EOL, 2));
@@ -246,7 +248,7 @@ class ClassModel extends RenderableModel
     protected function processMethods(array &$lines): void
     {
         $methods = array_filter($this->methods, function ($method) {
-            return !$method instanceof VirtualMethodModel;
+            return ! $method instanceof VirtualMethodModel;
         });
         if (count($methods) > 0) {
             $lines[] = $this->renderArray($methods, 4, str_repeat(PHP_EOL, 2));

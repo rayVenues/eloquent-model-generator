@@ -3,6 +3,8 @@ CREATE TABLE users (
     username VARCHAR(255) NOT NULL,
     is_active INTEGER UNSIGNED,
     organization_id INTEGER NOT NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL,
     FOREIGN KEY (organization_id) REFERENCES organizations(id)
 );
 
@@ -11,6 +13,8 @@ CREATE TABLE user_models (
     username VARCHAR(255) NOT NULL,
     is_active INTEGER UNSIGNED,
     organization_id INTEGER NOT NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL,
     FOREIGN KEY (organization_id) REFERENCES organizations(id)
 );
 
@@ -29,13 +33,18 @@ CREATE TABLE user_roles (
 
 CREATE TABLE organizations (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    name VARCHAR(50) NOT NULL
+    name VARCHAR(50) NOT NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL,
+    deleted_at DATETIME NOT NULL
 );
 
 CREATE TABLE avatars (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     path VARCHAR(255) NOT NULL,
     user_id INTEGER NOT NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
     FOREIGN KEY (user_id) REFERENCES user_models(id)
 );
@@ -47,6 +56,8 @@ CREATE TABLE posts (
     title VARCHAR(255) NOT NULL,
     content TEXT,
     author_id INTEGER NOT NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL,
     FOREIGN KEY (author_id) REFERENCES users(id)
     FOREIGN KEY (author_id) REFERENCES user_models(id)
 );

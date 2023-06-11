@@ -3,6 +3,7 @@
 namespace Ray\EloquentModelGenerator\Config;
 
 use Exception;
+use Ray\EloquentModelGenerator\Helper\EmgHelper;
 use Ray\EloquentModelGenerator\Helper\NamespaceValidator;
 use Ray\EloquentModelGenerator\Model\Traits\ClassTypeModifierTrait;
 
@@ -11,7 +12,7 @@ class Config
     use ClassTypeModifierTrait;
 
     private ?bool $noBackup = false;
-    private ?bool $noTimestamps = false;
+    private ?bool $timestampsDisabled = false;
     private ?string $baseClassName = null;
     private ?string $className = null;
     private ?string $connection = null;
@@ -22,6 +23,7 @@ class Config
     private ?string $implements;
 
     private ?string $uses = null;
+    private ?int $perPage = null;
 
     public function getUses(): ?string
     {
@@ -101,16 +103,17 @@ class Config
         return $this;
     }
 
-    public function getNoTimestamps(): ?bool
+    public function setTimestampsDisabled(?bool $flag): self
     {
-        return $this->noTimestamps;
-    }
-
-    public function setNoTimestamps(bool | null $flag = null): self
-    {
-        $this->noTimestamps = $flag ?? true;
+        $this->timestampsDisabled = $flag;
 
         return $this;
+
+    }
+
+    public function getTimestampsDisabled(): bool
+    {
+        return $this->timestampsDisabled;
     }
 
     public function getDateFormat(): ?string
@@ -159,5 +162,17 @@ class Config
     public function getImplements(): string
     {
         return $this->implements;
+    }
+
+    public function getPerPage(): ?int
+    {
+        return $this->perPage;
+    }
+
+    public function setPerPage(int $perPage): self
+    {
+        $this->perPage = $perPage;
+
+        return $this;
     }
 }

@@ -282,3 +282,32 @@ protected $perPage = 20;
 protected $guarded = [];
 ...
 ```
+
+### Notes:
+
+Processor priority is important. Priority 0 is the highest priority. The higher the priority, the later the processor is
+called.
+
+Default processor priority:
+
+- `TableNameProcessor` - 0
+- `ClassDefinitionProcessor` - 18
+- `NamespaceProcessor` - 1
+- `BaseClassProcessor` - 2
+- `CustomPrimaryKeyProcessor` - 3
+- `SoftDeleteTraitProcessor` - 4
+- `DateFormatProcessor` - 5
+- `ConnectionProcessor` - 6
+- `NoBackupProcessor` - 7
+- `PropertyProcessor` - 8
+- `RelationProcessor` - 9
+- `DocBlockProcessor` - 10
+- `FillableProcessor` - 11
+- `PrimaryKeyProcessor` - 12
+- `TimestampsProcessor` - 13
+- `TableNameProcessor` - 14
+- `BackupProcessor` - 15
+- `ModelProcessor` - 16
+- `UseStatementProcessor` - 17
+- `NamespaceDirectoryProcessor` - 19
+- 

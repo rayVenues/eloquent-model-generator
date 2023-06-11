@@ -7,12 +7,14 @@ use Illuminate\Database\SQLiteConnection;
 use PHPUnit\Framework\MockObject\Exception;
 use Ray\EloquentModelGenerator\Config\Config;
 use Ray\EloquentModelGenerator\Generator;
+use Ray\EloquentModelGenerator\Processor\ClassDefinitionProcessor;
 use Ray\EloquentModelGenerator\Processor\CustomPrimaryKeyProcessor;
 use Ray\EloquentModelGenerator\Processor\CustomPropertyProcessor;
 use Ray\EloquentModelGenerator\Processor\FieldProcessor;
 use Ray\EloquentModelGenerator\Processor\NamespaceProcessor;
 use Ray\EloquentModelGenerator\Processor\RelationProcessor;
-use Ray\EloquentModelGenerator\Processor\TableNameProcessor;
+use Ray\EloquentModelGenerator\Processor\SoftDeleteProcessor;
+use Ray\EloquentModelGenerator\Processor\TableTimestampsProcessor;
 use Ray\EloquentModelGenerator\TypeRegistry;
 
 // TODO: Implement beforeAll()
@@ -43,17 +45,32 @@ beforeEach(
         $typeRegistry = new TypeRegistry($databaseManagerMock);
 
         $this->generator = new Generator([
+            new ClassDefinitionProcessor(),
             new CustomPrimaryKeyProcessor($databaseManagerMock, $typeRegistry),
-            new CustomPropertyProcessor(),
+            new CustomPropertyProcessor($databaseManagerMock),
             new FieldProcessor($databaseManagerMock, $typeRegistry),
             new NamespaceProcessor(),
             new RelationProcessor($databaseManagerMock),
-            new TableNameProcessor($databaseManagerMock),
+            new SoftDeleteProcessor($databaseManagerMock),
+            new TableTimestampsProcessor($databaseManagerMock),
         ]);
-
     });
 
-it('Generates a User Model.',
+it('Generates a Model with a different table name.',
+    function () {
+        $config = (new Config())
+            ->setClassName('User')
+            ->setTableName('roles')
+            ->setNamespace('App\Models')
+            ->setBaseClassName(Model::class);
+
+        $model = $this->generator->generateModel($config);
+        $a = $model->render();
+        $b = file_get_contents(__DIR__ . '/resources/User-with-different-table-name.php.generated');
+        expect($a)->toEqual($b);
+    });
+
+it('Generates a simple User Model.',
     function () {
         $config = (new Config())
             ->setClassName('User')
@@ -67,6 +84,9 @@ it('Generates a User Model.',
     });
 
 it('Generates an abstract User Model.',
+    /**
+     * @throws \Exception
+     */
     function () {
         $config = (new Config())
             ->setClassName('User')
@@ -81,6 +101,9 @@ it('Generates an abstract User Model.',
     });
 
 it('Generates a final User Model.',
+    /**
+     * @throws \Exception
+     */
     function () {
         $config = (new Config())
             ->setClassName('User')
@@ -94,7 +117,10 @@ it('Generates a final User Model.',
         expect($a)->toEqual($b);
     });
 
-it('Does not allow a class type other than abstract or final.',
+it('Does not allow a class type other than `abstract` or `final`.',
+    /**
+     * @throws \Exception
+     */
     function () {
         $config = (new Config())
             ->setClassName('User')
@@ -110,17 +136,19 @@ it('Generates a model with custom properties.',
         $config = (new Config())
             ->setClassName('User')
             ->setNamespace('App')
-            ->setBaseClassName('Base\ClassName')
-            ->setNoTimestamps()
+            ->setBaseClassName(Model::class)
             ->setDateFormat('d/m/y');
 
         $model = $this->generator->generateModel($config);
         $a = $model->render();
-        $b = file_get_contents(__DIR__ . '/resources/User-with-params.php.generated');
+        $b = file_get_contents(__DIR__ . '/resources/User-with-custom-properties.php.generated');
         expect($a)->toEqual($b);
     });
 
 it('Generates a Model with output path and no namespace.',
+    /**
+     * @throws \Exception
+     */
     function () {
         $config = (new Config())
             ->setClassName('User')
@@ -144,4 +172,17 @@ it('Generates a Model specifying output-path and namespace options. The namespac
         $a = $model->render();
         expect($a)->toContain('namespace App\Models');
     });
+
+it('Generates a Model with table without created_at and updated_at columns.',
+    function () {
+        $config = (new Config())
+            ->setClassName('User')
+            ->setNamespace('App\Models')
+            ->setBaseClassName('Base\ClassName');
+
+        $model = $this->generator->generateModel($config);
+        $a = $model->render();
+        expect($a)->toContain('namespace App\Models');
+    });
+
 

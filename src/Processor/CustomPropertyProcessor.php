@@ -2,6 +2,11 @@
 
 namespace Ray\EloquentModelGenerator\Processor;
 
+use Doctrine\DBAL\Exception;
+use Illuminate\Database\DatabaseManager;
+use Ray\EloquentModelGenerator\Exception\GeneratorException;
+use Ray\EloquentModelGenerator\Helper\DatabaseHelper;
+use Ray\EloquentModelGenerator\Helper\EmgHelper;
 use Ray\EloquentModelGenerator\Model\DocBlockModel;
 use Ray\EloquentModelGenerator\Model\PropertyModel;
 use Ray\EloquentModelGenerator\Config\Config;
@@ -9,14 +14,59 @@ use Ray\EloquentModelGenerator\Model\EloquentModel;
 
 class CustomPropertyProcessor implements ProcessorInterface
 {
+
+    public function __construct(private readonly DatabaseManager $databaseManager)
+    {
+    }
+
+    /**
+     * @throws GeneratorException
+     * @throws Exception
+     */
     public function process(EloquentModel $model, Config $config): void
     {
-        if ($config->getNoTimestamps()) {
-            $pNoTimestamps = new PropertyModel('timestamps', 'public', false);
-            $pNoTimestamps->setDocBlock(
-                docBlock: new DocBlockModel('Indicates if the model should be timestamped.', '@var bool')
+        /**
+         * TODO:
+         * - Add support for $config->getIncrementing()
+         * - Add support for $config->getKeyName()
+         * - Add support for $config->getHidden()
+         * - Add support for $config->getVisible()
+         * - Add support for $config->getFillable()
+         * - Add support for $config->getGuarded()
+         * - Add support for $config->getDates()
+         * - Add support for $config->getCasts()
+         * - Add support for $config->getAppends()
+         * - Add support for $config->getKeyType()
+         * - Add support for $config->getWith()
+         * - Add support for $config->getAppends()
+         */
+
+        $tableName = $config->getTableName();
+        if (! $tableName) {
+            $model->setTableName(EmgHelper::getTableNameByClassName($config->getClassName()));
+        } else {
+            $model->setTableName($tableName);
+            $className = EmgHelper::getTableNameByClassName($config->getClassName());
+            $schemaManager = $this->databaseManager->connection($config->getConnection())->getDoctrineSchemaManager();
+            if (! $schemaManager->tablesExist($tableName)) {
+                throw new GeneratorException(sprintf('Table %s does not exist', $tableName));
+            }
+            if ($tableName !== $className) {
+                $pTableName = new PropertyModel('table', 'protected', $config->getTableName());
+                $pTableName->setDocBlock(
+                    docBlock: new DocBlockModel('The table associated with the model.', '@var string')
+                );
+                $model->addProperty($pTableName);
+            }
+        }
+
+
+        if ($config->getPerPage() !== null) {
+            $pPerPage = new PropertyModel('perPage', 'protected', $config->getPerPage());
+            $pPerPage->setDocBlock(
+                docBlock: new DocBlockModel('The number of models to return for pagination.', '@var int')
             );
-            $model->addProperty($pNoTimestamps);
+            $model->addProperty($pPerPage);
         }
 
         if ($config->getDateFormat() !== null) {
@@ -38,6 +88,6 @@ class CustomPropertyProcessor implements ProcessorInterface
 
     public function getPriority(): int
     {
-        return 5;
+        return 10;
     }
 }

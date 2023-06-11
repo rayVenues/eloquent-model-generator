@@ -18,16 +18,17 @@ trait GenerateCommandTrait
     protected function createConfig(): Config
     {
         return (new Config())
-            ->setTableName($this->option('table-name'))
-            ->setUses($this->option('uses'))
-            ->setNamespace($this->option('namespace'))
-            ->setOutputPath($this->option('output-path'))
+            ->setTimestampsDisabled($this->option('no-timestamps'))
             ->setBaseClassName($this->option('base-class-name'))
             ->setClassType($this->option('class-type'))
-            ->setImplements($this->option('implements'))
-            ->setNoTimestamps($this->option('no-timestamps'))
+            ->setConnection($this->option('connection'))
             ->setDateFormat($this->option('date-format'))
-            ->setConnection($this->option('connection'));
+            ->setImplements($this->option('implements'))
+            ->setNamespace($this->option('namespace'))
+            ->setOutputPath($this->option('output-path'))
+            ->setPerPage($this->option('per-page'))
+            ->setTableName($this->option('table-name'))
+            ->setUses($this->option('uses'));
     }
 
     /**
@@ -79,13 +80,14 @@ trait GenerateCommandTrait
             ['uses', 'us', InputOption::VALUE_OPTIONAL, 'Model base class uses', config('eloquent_model_generator.base_class_uses')],
             ['class-type', 'ct', InputOption::VALUE_OPTIONAL, 'Set Model Class type (abstract or final)', config('eloquent_model_generator.class_type', false)],
             ['connection', 'cn', InputOption::VALUE_OPTIONAL, 'Connection property', config('eloquent_model_generator.connection')],
-            ['date-format', 'df', InputOption::VALUE_OPTIONAL, 'dateFormat property', config('eloquent_model_generator.date_format')],
+            ['date-format', 'df', InputOption::VALUE_OPTIONAL, 'The storage format of the model\'s date columns.', config('eloquent_model_generator.date_format')],
             ['implements', 'im', InputOption::VALUE_OPTIONAL, 'Set Model Class implements', config('eloquent_model_generator.implements', false)],
             ['namespace', 'ns', InputOption::VALUE_OPTIONAL, 'Namespace of the model', config('eloquent_model_generator.namespace', 'App\Models')],
-            ['no-backup', 'nb', InputOption::VALUE_OPTIONAL, 'Backup existing model', config('eloquent_model_generator.no_backup', false)],
-            ['no-timestamps', 'nt', InputOption::VALUE_OPTIONAL, 'Set timestamps property to false', config('eloquent_model_generator.no_timestamps', false)],
+            ['no-backup', 'nb', InputOption::VALUE_OPTIONAL, 'Backup existing model', config('eloquent_model_generator.no_backup')],
+            ['no-timestamps', 'nt', InputOption::VALUE_OPTIONAL, 'Indicates if the model should NOT be timestamped.', config('eloquent_model_generator.no_timestamps')],
             ['output-path', 'op', InputOption::VALUE_OPTIONAL, 'Directory to store generated model', config('eloquent_model_generator.output_path')],
-            ['table-name', 'tn', InputOption::VALUE_OPTIONAL, 'Name of the table to use', null],
+            ['table-name', 'tn', InputOption::VALUE_OPTIONAL, 'The table associated with the model', null],
+            ['per-page', 'pp', InputOption::VALUE_OPTIONAL, 'The number of models to return for pagination.'],
         ];
     }
 }

@@ -16,7 +16,7 @@ class EloquentModel extends ClassModel
 {
     use ClassTypeModifierTrait;
 
-    protected string $tableName;
+    protected string $tableName = '';
 
     public function setTableName(string $tableName): self
     {
@@ -148,8 +148,8 @@ class EloquentModel extends ClassModel
         $array = array_reverse($array);
         $milestone = false;
         foreach ($array as $key => &$item) {
-            if (!$milestone) {
-                if (!is_string($item)) {
+            if (! $milestone) {
+                if (! is_string($item)) {
                     unset($array[$key]);
                 } else {
                     $milestone = true;

@@ -9,6 +9,8 @@ use Base\ClassName;
  * @property integer $organization_id
  * @property string $username
  * @property integer $is_active
+ * @property string $created_at
+ * @property string $updated_at
  * @property Avatar $avatar
  * @property Post[] $posts
  * @property Organization $organization
@@ -16,11 +18,6 @@ use Base\ClassName;
  */
 class UserModel extends ClassName
 {
-    /**
-     * Indicates if the model should be timestamped.
-     * @var bool
-     */
-    public $timestamps = false;
 
     /**
      * The storage format of the model's date columns.
@@ -31,7 +28,7 @@ class UserModel extends ClassName
     /**
      * @var array
      */
-    protected $fillable = ['organization_id', 'username', 'is_active'];
+    protected $fillable = ['organization_id', 'username', 'is_active', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
